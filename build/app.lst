@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc8IDBuz.s 			page 1
+ARM GAS  /tmp/cco9LWb0.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -25,15 +25,20 @@ ARM GAS  /tmp/cc8IDBuz.s 			page 1
   20      20697320 
   20      73746172 
   20      7465642E 
-  21              		.section	.text.app,"ax",%progbits
-  22              		.align	1
-  23              		.global	app
-  24              		.syntax unified
-  25              		.thumb
-  26              		.thumb_func
-  28              	app:
-  29              	.LFB68:
-  30              		.file 1 "App/Src/app.c"
+  21              		.align	2
+  22              	.LC1:
+  23 0018 4C202564 		.ascii	"L %d\011\011\011R%d\012\000"
+  23      09090952 
+  23      25640A00 
+  24              		.section	.text.app,"ax",%progbits
+  25              		.align	1
+  26              		.global	app
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	app:
+  32              	.LFB68:
+  33              		.file 1 "App/Src/app.c"
    1:App/Src/app.c **** #include "app.h"
    2:App/Src/app.c **** #include "stdbool.h"
    3:App/Src/app.c **** #include "main.h"
@@ -51,545 +56,679 @@ ARM GAS  /tmp/cc8IDBuz.s 			page 1
   15:App/Src/app.c **** 
   16:App/Src/app.c **** void app()
   17:App/Src/app.c **** {
-  31              		.loc 1 17 1 view -0
-  32              		.cfi_startproc
-  33              		@ args = 0, pretend = 0, frame = 0
-  34              		@ frame_needed = 0, uses_anonymous_args = 0
-  35 0000 70B5     		push	{r4, r5, r6, lr}
-  36              	.LCFI0:
-  37              		.cfi_def_cfa_offset 16
-ARM GAS  /tmp/cc8IDBuz.s 			page 2
+  34              		.loc 1 17 1 view -0
+  35              		.cfi_startproc
+ARM GAS  /tmp/cco9LWb0.s 			page 2
 
 
-  38              		.cfi_offset 4, -16
-  39              		.cfi_offset 5, -12
-  40              		.cfi_offset 6, -8
-  41              		.cfi_offset 14, -4
-  42 0002 84B0     		sub	sp, sp, #16
-  43              	.LCFI1:
-  44              		.cfi_def_cfa_offset 32
-  18:App/Src/app.c **** 
-  19:App/Src/app.c ****     HAL_TIM_PWM_Stop_IT(&htim4, TIM_CHANNEL_3); // b8   l
-  45              		.loc 1 19 5 view .LVU1
-  46 0004 174E     		ldr	r6, .L4
-  47 0006 0821     		movs	r1, #8
-  48 0008 3046     		mov	r0, r6
-  49 000a FFF7FEFF 		bl	HAL_TIM_PWM_Stop_IT
-  50              	.LVL0:
-  20:App/Src/app.c ****     HAL_TIM_PWM_Stop_IT(&htim3, TIM_CHANNEL_2); // b8   l
-  51              		.loc 1 20 5 view .LVU2
-  52 000e 164D     		ldr	r5, .L4+4
-  53 0010 0421     		movs	r1, #4
-  54 0012 2846     		mov	r0, r5
-  55 0014 FFF7FEFF 		bl	HAL_TIM_PWM_Stop_IT
-  56              	.LVL1:
-  21:App/Src/app.c **** 
-  22:App/Src/app.c ****     uart_send_mes("Hardware is started...\n", 100);
-  57              		.loc 1 22 5 view .LVU3
-  58 0018 6421     		movs	r1, #100
-  59 001a 1448     		ldr	r0, .L4+8
-  60 001c FFF7FEFF 		bl	uart_send_mes
-  61              	.LVL2:
-  23:App/Src/app.c ****     uart_ask_str_IT(command);
-  62              		.loc 1 23 5 view .LVU4
-  63 0020 1348     		ldr	r0, .L4+12
-  64 0022 FFF7FEFF 		bl	uart_ask_str_IT
-  65              	.LVL3:
-  24:App/Src/app.c **** 
-  25:App/Src/app.c ****     drive_init(
-  66              		.loc 1 25 5 view .LVU5
-  67 0026 4FF48063 		mov	r3, #1024
-  68 002a 0393     		str	r3, [sp, #12]
-  69 002c 114C     		ldr	r4, .L4+16
-  70 002e 0294     		str	r4, [sp, #8]
-  71 0030 0223     		movs	r3, #2
-  72 0032 0193     		str	r3, [sp, #4]
-  73 0034 0094     		str	r4, [sp]
-  74 0036 0823     		movs	r3, #8
-  75 0038 3246     		mov	r2, r6
-  76 003a 0021     		movs	r1, #0
-  77 003c 0E48     		ldr	r0, .L4+20
-  78 003e FFF7FEFF 		bl	drive_init
-  79              	.LVL4:
-  26:App/Src/app.c ****         &drv_l,
-  27:App/Src/app.c ****         left,
-  28:App/Src/app.c ****         &htim4,
-  29:App/Src/app.c ****         TIM_CHANNEL_3,
-  30:App/Src/app.c ****         ENA_DRV_L_GPIO_Port,
-  31:App/Src/app.c ****         ENA_DRV_L_Pin,
-  32:App/Src/app.c ****         DIR_DRV_L_GPIO_Port,
-ARM GAS  /tmp/cc8IDBuz.s 			page 3
+  36              		@ args = 0, pretend = 0, frame = 64
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38 0000 30B5     		push	{r4, r5, lr}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 12
+  41              		.cfi_offset 4, -12
+  42              		.cfi_offset 5, -8
+  43              		.cfi_offset 14, -4
+  44 0002 97B0     		sub	sp, sp, #92
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 104
+  18:App/Src/app.c ****     uart_send_mes("Hardware is started...\n", 100);
+  47              		.loc 1 18 5 view .LVU1
+  48 0004 6421     		movs	r1, #100
+  49 0006 2148     		ldr	r0, .L4
+  50 0008 FFF7FEFF 		bl	uart_send_mes
+  51              	.LVL0:
+  19:App/Src/app.c ****     uart_ask_str_IT(command);
+  52              		.loc 1 19 5 view .LVU2
+  53 000c 2048     		ldr	r0, .L4+4
+  54 000e FFF7FEFF 		bl	uart_ask_str_IT
+  55              	.LVL1:
+  20:App/Src/app.c **** 
+  21:App/Src/app.c ****     drive_init(
+  56              		.loc 1 21 5 view .LVU3
+  57 0012 4FF4C855 		mov	r5, #6400
+  58 0016 0595     		str	r5, [sp, #20]
+  59 0018 0A23     		movs	r3, #10
+  60 001a 0493     		str	r3, [sp, #16]
+  61 001c 4FF48063 		mov	r3, #1024
+  62 0020 0393     		str	r3, [sp, #12]
+  63 0022 1C4C     		ldr	r4, .L4+8
+  64 0024 0294     		str	r4, [sp, #8]
+  65 0026 0223     		movs	r3, #2
+  66 0028 0193     		str	r3, [sp, #4]
+  67 002a 0094     		str	r4, [sp]
+  68 002c 0823     		movs	r3, #8
+  69 002e 1A4A     		ldr	r2, .L4+12
+  70 0030 0021     		movs	r1, #0
+  71 0032 1A48     		ldr	r0, .L4+16
+  72 0034 FFF7FEFF 		bl	drive_init
+  73              	.LVL2:
+  22:App/Src/app.c ****         &drv_l,
+  23:App/Src/app.c ****         left,
+  24:App/Src/app.c ****         &htim4,
+  25:App/Src/app.c ****         TIM_CHANNEL_3,
+  26:App/Src/app.c ****         ENA_DRV_L_GPIO_Port,
+  27:App/Src/app.c ****         ENA_DRV_L_Pin,
+  28:App/Src/app.c ****         DIR_DRV_L_GPIO_Port,
+  29:App/Src/app.c ****         DIR_DRV_L_Pin,
+  30:App/Src/app.c ****         10,
+  31:App/Src/app.c ****         6400);
+  32:App/Src/app.c **** 
+  33:App/Src/app.c ****     drive_init(
+  74              		.loc 1 33 5 view .LVU4
+  75 0038 0595     		str	r5, [sp, #20]
+  76 003a 0323     		movs	r3, #3
+ARM GAS  /tmp/cco9LWb0.s 			page 3
 
 
-  33:App/Src/app.c ****         DIR_DRV_L_Pin);
-  34:App/Src/app.c **** 
-  35:App/Src/app.c ****     drive_init(
-  80              		.loc 1 35 5 view .LVU6
-  81 0042 4FF40073 		mov	r3, #512
-  82 0046 0393     		str	r3, [sp, #12]
-  83 0048 0294     		str	r4, [sp, #8]
-  84 004a 4FF40063 		mov	r3, #2048
-  85 004e 0193     		str	r3, [sp, #4]
-  86 0050 0A4B     		ldr	r3, .L4+24
-  87 0052 0093     		str	r3, [sp]
-  88 0054 0423     		movs	r3, #4
-  89 0056 2A46     		mov	r2, r5
-  90 0058 0021     		movs	r1, #0
-  91 005a 0948     		ldr	r0, .L4+28
-  92 005c FFF7FEFF 		bl	drive_init
-  93              	.LVL5:
-  36:App/Src/app.c ****         &drv_r,
-  37:App/Src/app.c ****         left,
-  38:App/Src/app.c ****         &htim3,
-  39:App/Src/app.c ****         TIM_CHANNEL_2,
-  40:App/Src/app.c ****         ENA_DRV_R_GPIO_Port,
-  41:App/Src/app.c ****         ENA_DRV_R_Pin,
-  42:App/Src/app.c ****         DIR_DRV_R_GPIO_Port,
-  43:App/Src/app.c ****         DIR_DRV_R_Pin);
+  77 003c 0493     		str	r3, [sp, #16]
+  78 003e 4FF40073 		mov	r3, #512
+  79 0042 0393     		str	r3, [sp, #12]
+  80 0044 0294     		str	r4, [sp, #8]
+  81 0046 4FF40063 		mov	r3, #2048
+  82 004a 0193     		str	r3, [sp, #4]
+  83 004c 144B     		ldr	r3, .L4+20
+  84 004e 0093     		str	r3, [sp]
+  85 0050 0423     		movs	r3, #4
+  86 0052 144A     		ldr	r2, .L4+24
+  87 0054 0021     		movs	r1, #0
+  88 0056 1448     		ldr	r0, .L4+28
+  89 0058 FFF7FEFF 		bl	drive_init
+  90              	.LVL3:
+  34:App/Src/app.c ****         &drv_r,
+  35:App/Src/app.c ****         left,
+  36:App/Src/app.c ****         &htim3,
+  37:App/Src/app.c ****         TIM_CHANNEL_2,
+  38:App/Src/app.c ****         ENA_DRV_R_GPIO_Port,
+  39:App/Src/app.c ****         ENA_DRV_R_Pin,
+  40:App/Src/app.c ****         DIR_DRV_R_GPIO_Port,
+  41:App/Src/app.c ****         DIR_DRV_R_Pin,
+  42:App/Src/app.c ****         3,
+  43:App/Src/app.c ****         6400);
   44:App/Src/app.c **** 
   45:App/Src/app.c ****     int16_t i = 500;
-  94              		.loc 1 45 5 view .LVU7
-  95              	.L2:
-  46:App/Src/app.c ****     uint8_t S[16];
-  96              		.loc 1 46 5 discriminator 1 view .LVU8
-  47:App/Src/app.c **** 
-  48:App/Src/app.c ****     // HAL_GPIO_WritePin(DIR_DRV_R_GPIO_Port, DIR_DRV_R_Pin, PIN_ON);
-  49:App/Src/app.c ****     // HAL_GPIO_WritePin(DIR_DRV_R_GPIO_Port, DIR_DRV_R_Pin, PIN_OFF);
-  50:App/Src/app.c ****     // HAL_GPIO_WritePin(ENA_DRV_R_GPIO_Port, ENA_DRV_R_Pin, PIN_ON);
-  51:App/Src/app.c ****     // HAL_GPIO_WritePin(ENA_DRV_R_GPIO_Port, ENA_DRV_R_Pin, PIN_OFF);
-  52:App/Src/app.c ****     // HAL_GPIO_WritePin(PWM_R_GPIO_Port, PWM_R_Pin, SET);
-  53:App/Src/app.c ****     // HAL_GPIO_WritePin(PWM_R_GPIO_Port, PWM_R_Pin, RESET);
-  54:App/Src/app.c **** 
-  55:App/Src/app.c ****     // HAL_GPIO_WritePin(DIR_DRV_L_GPIO_Port, DIR_DRV_L_Pin, PIN_ON);
-  56:App/Src/app.c ****     // HAL_GPIO_WritePin(DIR_DRV_L_GPIO_Port, DIR_DRV_L_Pin, PIN_OFF);
-  57:App/Src/app.c ****     // HAL_GPIO_WritePin(ENA_DRV_L_GPIO_Port, ENA_DRV_L_Pin, PIN_ON);
-  58:App/Src/app.c ****     // HAL_GPIO_WritePin(ENA_DRV_L_GPIO_Port, ENA_DRV_L_Pin, PIN_OFF);
-  59:App/Src/app.c ****     // HAL_GPIO_WritePin(PWM_L_GPIO_Port, PWM_L_Pin, SET);
-  60:App/Src/app.c ****     // HAL_GPIO_WritePin(PWM_L_GPIO_Port, PWM_L_Pin, RESET);
-  61:App/Src/app.c **** 
-  62:App/Src/app.c ****     while (true)
-  97              		.loc 1 62 5 discriminator 1 view .LVU9
-  63:App/Src/app.c ****     {
-  64:App/Src/app.c ****     }
-  98              		.loc 1 64 5 discriminator 1 view .LVU10
-  62:App/Src/app.c ****     {
-  99              		.loc 1 62 11 discriminator 1 view .LVU11
- 100 0060 FEE7     		b	.L2
- 101              	.L5:
- 102 0062 00BF     		.align	2
- 103              	.L4:
-ARM GAS  /tmp/cc8IDBuz.s 			page 4
+  91              		.loc 1 45 5 view .LVU5
+  46:App/Src/app.c ****     uint8_t buffer[64];
+  92              		.loc 1 46 5 view .LVU6
+  47:App/Src/app.c ****     HAL_TIM_Base_Start_IT(&htim2);
+  93              		.loc 1 47 5 view .LVU7
+  94 005c 1348     		ldr	r0, .L4+32
+  95 005e FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
+  96              	.LVL4:
+  97              	.L2:
+  48:App/Src/app.c **** 
+  49:App/Src/app.c ****     while (true)
+  98              		.loc 1 49 5 discriminator 1 view .LVU8
+  50:App/Src/app.c ****     {
+  51:App/Src/app.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+  99              		.loc 1 51 9 discriminator 1 view .LVU9
+ 100 0062 4FF40051 		mov	r1, #8192
+ 101 0066 1248     		ldr	r0, .L4+36
+ 102 0068 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 103              	.LVL5:
+  52:App/Src/app.c ****         sprintf(buffer, "L %d\t\t\tR%d\n", drv_l.current_speed, drv_r.current_speed);
+ 104              		.loc 1 52 9 discriminator 1 view .LVU10
+ 105 006c 0E4B     		ldr	r3, .L4+28
+ 106 006e 9B68     		ldr	r3, [r3, #8]
+ 107 0070 0A4A     		ldr	r2, .L4+16
+ 108 0072 9268     		ldr	r2, [r2, #8]
+ 109 0074 0F49     		ldr	r1, .L4+40
+ 110 0076 06A8     		add	r0, sp, #24
+ 111 0078 FFF7FEFF 		bl	sprintf
+ 112              	.LVL6:
+  53:App/Src/app.c ****         uart_send_mes_IT(buffer);
+ 113              		.loc 1 53 9 discriminator 1 view .LVU11
+ARM GAS  /tmp/cco9LWb0.s 			page 4
 
 
- 104 0064 00000000 		.word	htim4
- 105 0068 00000000 		.word	htim3
- 106 006c 00000000 		.word	.LC0
- 107 0070 00000000 		.word	.LANCHOR0
- 108 0074 00080140 		.word	1073809408
- 109 0078 00000000 		.word	.LANCHOR1
- 110 007c 000C0140 		.word	1073810432
- 111 0080 00000000 		.word	.LANCHOR2
- 112              		.cfi_endproc
- 113              	.LFE68:
- 115              		.section	.rodata.uart_str_RxCPLTCallback.str1.4,"aMS",%progbits,1
- 116              		.align	2
- 117              	.LC1:
- 118 0000 2000     		.ascii	" \000"
- 119 0002 0000     		.align	2
- 120              	.LC2:
- 121 0004 73746172 		.ascii	"start\000"
- 121      7400
- 122 000a 0000     		.align	2
- 123              	.LC3:
- 124 000c 53544152 		.ascii	"START\000"
- 124      5400
- 125 0012 0000     		.align	2
- 126              	.LC4:
- 127 0014 73746F70 		.ascii	"stop\000"
- 127      00
- 128 0019 000000   		.align	2
- 129              	.LC5:
- 130 001c 53544F50 		.ascii	"STOP\000"
- 130      00
- 131 0021 000000   		.align	2
- 132              	.LC6:
- 133 0024 7200     		.ascii	"r\000"
- 134 0026 0000     		.align	2
- 135              	.LC7:
- 136 0028 5200     		.ascii	"R\000"
- 137 002a 0000     		.align	2
- 138              	.LC8:
- 139 002c 6C00     		.ascii	"l\000"
- 140 002e 0000     		.align	2
- 141              	.LC9:
- 142 0030 4C00     		.ascii	"L\000"
- 143              		.section	.text.uart_str_RxCPLTCallback,"ax",%progbits
- 144              		.align	1
- 145              		.global	uart_str_RxCPLTCallback
- 146              		.syntax unified
- 147              		.thumb
- 148              		.thumb_func
- 150              	uart_str_RxCPLTCallback:
- 151              	.LFB69:
-  65:App/Src/app.c **** }
-  66:App/Src/app.c **** 
-  67:App/Src/app.c **** void uart_str_RxCPLTCallback()
-  68:App/Src/app.c **** {
- 152              		.loc 1 68 1 view -0
- 153              		.cfi_startproc
- 154              		@ args = 0, pretend = 0, frame = 48
-ARM GAS  /tmp/cc8IDBuz.s 			page 5
+ 114 007c 06A8     		add	r0, sp, #24
+ 115 007e FFF7FEFF 		bl	uart_send_mes_IT
+ 116              	.LVL7:
+  54:App/Src/app.c ****         HAL_Delay(100);
+ 117              		.loc 1 54 9 discriminator 1 view .LVU12
+ 118 0082 6420     		movs	r0, #100
+ 119 0084 FFF7FEFF 		bl	HAL_Delay
+ 120              	.LVL8:
+  49:App/Src/app.c ****     {
+ 121              		.loc 1 49 11 discriminator 1 view .LVU13
+ 122 0088 EBE7     		b	.L2
+ 123              	.L5:
+ 124 008a 00BF     		.align	2
+ 125              	.L4:
+ 126 008c 00000000 		.word	.LC0
+ 127 0090 00000000 		.word	.LANCHOR0
+ 128 0094 00080140 		.word	1073809408
+ 129 0098 00000000 		.word	htim4
+ 130 009c 00000000 		.word	.LANCHOR1
+ 131 00a0 000C0140 		.word	1073810432
+ 132 00a4 00000000 		.word	htim3
+ 133 00a8 00000000 		.word	.LANCHOR2
+ 134 00ac 00000000 		.word	htim2
+ 135 00b0 00100140 		.word	1073811456
+ 136 00b4 18000000 		.word	.LC1
+ 137              		.cfi_endproc
+ 138              	.LFE68:
+ 140              		.section	.rodata.uart_str_RxCPLTCallback.str1.4,"aMS",%progbits,1
+ 141              		.align	2
+ 142              	.LC2:
+ 143 0000 2000     		.ascii	" \000"
+ 144 0002 0000     		.align	2
+ 145              	.LC3:
+ 146 0004 77686F61 		.ascii	"whoareyou\000"
+ 146      7265796F 
+ 146      7500
+ 147 000e 0000     		.align	2
+ 148              	.LC4:
+ 149 0010 64726976 		.ascii	"drives\012\000"
+ 149      65730A00 
+ 150              		.align	2
+ 151              	.LC5:
+ 152 0018 73746172 		.ascii	"start\000"
+ 152      7400
+ 153 001e 0000     		.align	2
+ 154              	.LC6:
+ 155 0020 53544152 		.ascii	"START\000"
+ 155      5400
+ 156 0026 0000     		.align	2
+ 157              	.LC7:
+ 158 0028 73746F70 		.ascii	"stop\000"
+ 158      00
+ 159 002d 000000   		.align	2
+ 160              	.LC8:
+ 161 0030 53544F50 		.ascii	"STOP\000"
+ 161      00
+ 162 0035 000000   		.align	2
+ARM GAS  /tmp/cco9LWb0.s 			page 5
 
 
- 155              		@ frame_needed = 0, uses_anonymous_args = 0
- 156 0000 10B5     		push	{r4, lr}
- 157              	.LCFI2:
- 158              		.cfi_def_cfa_offset 8
- 159              		.cfi_offset 4, -8
- 160              		.cfi_offset 14, -4
- 161 0002 8CB0     		sub	sp, sp, #48
- 162              	.LCFI3:
- 163              		.cfi_def_cfa_offset 56
-  69:App/Src/app.c **** 
-  70:App/Src/app.c ****     uint8_t *word_arr[10];
- 164              		.loc 1 70 5 view .LVU13
-  71:App/Src/app.c ****     uint8_t *word;
- 165              		.loc 1 71 5 view .LVU14
-  72:App/Src/app.c ****     uint8_t i = 0;
- 166              		.loc 1 72 5 view .LVU15
- 167              	.LVL6:
-  73:App/Src/app.c ****     volatile int32_t vel = 0;
- 168              		.loc 1 73 5 view .LVU16
- 169              		.loc 1 73 22 is_stmt 0 view .LVU17
- 170 0004 0024     		movs	r4, #0
- 171 0006 0194     		str	r4, [sp, #4]
-  74:App/Src/app.c ****     struct drive *cur_d = NULL;
- 172              		.loc 1 74 5 is_stmt 1 view .LVU18
- 173              	.LVL7:
-  75:App/Src/app.c ****     word = strtok(command, " ");
- 174              		.loc 1 75 5 view .LVU19
- 175              		.loc 1 75 12 is_stmt 0 view .LVU20
- 176 0008 3149     		ldr	r1, .L18
- 177 000a 3248     		ldr	r0, .L18+4
- 178 000c FFF7FEFF 		bl	strtok
- 179              	.LVL8:
-  76:App/Src/app.c ****     while (word != NULL)
- 180              		.loc 1 76 5 is_stmt 1 view .LVU21
- 181              		.loc 1 76 11 is_stmt 0 view .LVU22
- 182 0010 0AE0     		b	.L7
- 183              	.LVL9:
- 184              	.L8:
-  77:App/Src/app.c ****     {
-  78:App/Src/app.c ****         word_arr[i] = word;
- 185              		.loc 1 78 9 is_stmt 1 view .LVU23
- 186              		.loc 1 78 21 is_stmt 0 view .LVU24
- 187 0012 0CAB     		add	r3, sp, #48
- 188 0014 03EB8403 		add	r3, r3, r4, lsl #2
- 189 0018 43F8280C 		str	r0, [r3, #-40]
-  79:App/Src/app.c ****         i++;
- 190              		.loc 1 79 9 is_stmt 1 view .LVU25
- 191              		.loc 1 79 10 is_stmt 0 view .LVU26
- 192 001c 0134     		adds	r4, r4, #1
- 193              	.LVL10:
- 194              		.loc 1 79 10 view .LVU27
- 195 001e E4B2     		uxtb	r4, r4
- 196              	.LVL11:
-  80:App/Src/app.c ****         word = strtok(NULL, " ");
- 197              		.loc 1 80 9 is_stmt 1 view .LVU28
- 198              		.loc 1 80 16 is_stmt 0 view .LVU29
- 199 0020 2B49     		ldr	r1, .L18
-ARM GAS  /tmp/cc8IDBuz.s 			page 6
+ 163              	.LC9:
+ 164 0038 7200     		.ascii	"r\000"
+ 165 003a 0000     		.align	2
+ 166              	.LC10:
+ 167 003c 5200     		.ascii	"R\000"
+ 168 003e 0000     		.align	2
+ 169              	.LC11:
+ 170 0040 6C00     		.ascii	"l\000"
+ 171 0042 0000     		.align	2
+ 172              	.LC12:
+ 173 0044 4C00     		.ascii	"L\000"
+ 174              		.section	.text.uart_str_RxCPLTCallback,"ax",%progbits
+ 175              		.align	1
+ 176              		.global	uart_str_RxCPLTCallback
+ 177              		.syntax unified
+ 178              		.thumb
+ 179              		.thumb_func
+ 181              	uart_str_RxCPLTCallback:
+ 182              	.LFB69:
+  55:App/Src/app.c ****     }
+  56:App/Src/app.c **** }
+  57:App/Src/app.c **** 
+  58:App/Src/app.c **** void uart_str_RxCPLTCallback()
+  59:App/Src/app.c **** {
+ 183              		.loc 1 59 1 view -0
+ 184              		.cfi_startproc
+ 185              		@ args = 0, pretend = 0, frame = 48
+ 186              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187 0000 10B5     		push	{r4, lr}
+ 188              	.LCFI2:
+ 189              		.cfi_def_cfa_offset 8
+ 190              		.cfi_offset 4, -8
+ 191              		.cfi_offset 14, -4
+ 192 0002 8CB0     		sub	sp, sp, #48
+ 193              	.LCFI3:
+ 194              		.cfi_def_cfa_offset 56
+  60:App/Src/app.c **** 
+  61:App/Src/app.c ****     uint8_t *word_arr[10];
+ 195              		.loc 1 61 5 view .LVU15
+  62:App/Src/app.c ****     uint8_t *word;
+ 196              		.loc 1 62 5 view .LVU16
+  63:App/Src/app.c ****     uint8_t i = 0;
+ 197              		.loc 1 63 5 view .LVU17
+ 198              	.LVL9:
+  64:App/Src/app.c ****     volatile int32_t vel = 0;
+ 199              		.loc 1 64 5 view .LVU18
+ 200              		.loc 1 64 22 is_stmt 0 view .LVU19
+ 201 0004 0024     		movs	r4, #0
+ 202 0006 0194     		str	r4, [sp, #4]
+  65:App/Src/app.c ****     struct drive *cur_d = NULL;
+ 203              		.loc 1 65 5 is_stmt 1 view .LVU20
+ 204              	.LVL10:
+  66:App/Src/app.c ****     word = strtok(command, " ");
+ 205              		.loc 1 66 5 view .LVU21
+ 206              		.loc 1 66 12 is_stmt 0 view .LVU22
+ 207 0008 3649     		ldr	r1, .L20
+ 208 000a 3748     		ldr	r0, .L20+4
+ARM GAS  /tmp/cco9LWb0.s 			page 6
 
 
- 200 0022 0020     		movs	r0, #0
- 201              	.LVL12:
- 202              		.loc 1 80 16 view .LVU30
- 203 0024 FFF7FEFF 		bl	strtok
- 204              	.LVL13:
- 205              	.L7:
+ 209 000c FFF7FEFF 		bl	strtok
+ 210              	.LVL11:
+  67:App/Src/app.c ****     while (word != NULL)
+ 211              		.loc 1 67 5 is_stmt 1 view .LVU23
+ 212              		.loc 1 67 11 is_stmt 0 view .LVU24
+ 213 0010 0AE0     		b	.L7
+ 214              	.LVL12:
+ 215              	.L8:
+  68:App/Src/app.c ****     {
+  69:App/Src/app.c ****         word_arr[i] = word;
+ 216              		.loc 1 69 9 is_stmt 1 view .LVU25
+ 217              		.loc 1 69 21 is_stmt 0 view .LVU26
+ 218 0012 0CAB     		add	r3, sp, #48
+ 219 0014 03EB8403 		add	r3, r3, r4, lsl #2
+ 220 0018 43F8280C 		str	r0, [r3, #-40]
+  70:App/Src/app.c ****         i++;
+ 221              		.loc 1 70 9 is_stmt 1 view .LVU27
+ 222              		.loc 1 70 10 is_stmt 0 view .LVU28
+ 223 001c 0134     		adds	r4, r4, #1
+ 224              	.LVL13:
+ 225              		.loc 1 70 10 view .LVU29
+ 226 001e E4B2     		uxtb	r4, r4
+ 227              	.LVL14:
+  71:App/Src/app.c ****         word = strtok(NULL, " ");
+ 228              		.loc 1 71 9 is_stmt 1 view .LVU30
+ 229              		.loc 1 71 16 is_stmt 0 view .LVU31
+ 230 0020 3049     		ldr	r1, .L20
+ 231 0022 0020     		movs	r0, #0
+ 232              	.LVL15:
+ 233              		.loc 1 71 16 view .LVU32
+ 234 0024 FFF7FEFF 		bl	strtok
+ 235              	.LVL16:
+ 236              	.L7:
+  67:App/Src/app.c ****     {
+ 237              		.loc 1 67 11 is_stmt 1 view .LVU33
+ 238 0028 0028     		cmp	r0, #0
+ 239 002a F2D1     		bne	.L8
+  72:App/Src/app.c ****     }
+  73:App/Src/app.c ****     word_arr[i] = NULL;
+ 240              		.loc 1 73 5 view .LVU34
+ 241              		.loc 1 73 17 is_stmt 0 view .LVU35
+ 242 002c 0CAB     		add	r3, sp, #48
+ 243 002e 03EB8404 		add	r4, r3, r4, lsl #2
+ 244              	.LVL17:
+ 245              		.loc 1 73 17 view .LVU36
+ 246 0032 0023     		movs	r3, #0
+ 247 0034 44F8283C 		str	r3, [r4, #-40]
+  74:App/Src/app.c **** 
+  75:App/Src/app.c ****     if (strcmp(word_arr[0], "whoareyou") == 0)
+ 248              		.loc 1 75 5 is_stmt 1 view .LVU37
+ 249              		.loc 1 75 24 is_stmt 0 view .LVU38
+ 250 0038 029C     		ldr	r4, [sp, #8]
+ 251              		.loc 1 75 9 view .LVU39
+ 252 003a 2C49     		ldr	r1, .L20+8
+ 253 003c 2046     		mov	r0, r4
+ 254              	.LVL18:
+ 255              		.loc 1 75 9 view .LVU40
+ARM GAS  /tmp/cco9LWb0.s 			page 7
+
+
+ 256 003e FFF7FEFF 		bl	strcmp
+ 257              	.LVL19:
+ 258              		.loc 1 75 8 view .LVU41
+ 259 0042 0028     		cmp	r0, #0
+ 260 0044 4AD0     		beq	.L19
+ 261              	.L9:
   76:App/Src/app.c ****     {
- 206              		.loc 1 76 11 is_stmt 1 view .LVU31
- 207 0028 0028     		cmp	r0, #0
- 208 002a F2D1     		bne	.L8
-  81:App/Src/app.c ****     }
-  82:App/Src/app.c ****     word_arr[i] = NULL;
- 209              		.loc 1 82 5 view .LVU32
- 210              		.loc 1 82 17 is_stmt 0 view .LVU33
- 211 002c 0CAB     		add	r3, sp, #48
- 212 002e 03EB8404 		add	r4, r3, r4, lsl #2
- 213              	.LVL14:
- 214              		.loc 1 82 17 view .LVU34
- 215 0032 0023     		movs	r3, #0
- 216 0034 44F8283C 		str	r3, [r4, #-40]
-  83:App/Src/app.c **** 
-  84:App/Src/app.c ****     if (strcmp(word_arr[0], "start") == 0 || strcmp(word_arr[0], "START") == 0)
- 217              		.loc 1 84 5 is_stmt 1 view .LVU35
- 218              		.loc 1 84 24 is_stmt 0 view .LVU36
- 219 0038 029C     		ldr	r4, [sp, #8]
- 220              		.loc 1 84 9 view .LVU37
- 221 003a 2749     		ldr	r1, .L18+8
- 222 003c 2046     		mov	r0, r4
- 223              	.LVL15:
- 224              		.loc 1 84 9 view .LVU38
- 225 003e FFF7FEFF 		bl	strcmp
- 226              	.LVL16:
- 227              		.loc 1 84 8 view .LVU39
- 228 0042 20B1     		cbz	r0, .L9
- 229              		.loc 1 84 46 discriminator 1 view .LVU40
- 230 0044 2549     		ldr	r1, .L18+12
- 231 0046 2046     		mov	r0, r4
- 232 0048 FFF7FEFF 		bl	strcmp
- 233              	.LVL17:
- 234              		.loc 1 84 43 discriminator 1 view .LVU41
- 235 004c 28B9     		cbnz	r0, .L10
- 236              	.L9:
-  85:App/Src/app.c ****     {
-  86:App/Src/app.c **** 
-  87:App/Src/app.c ****         drive_on(&drv_l);
- 237              		.loc 1 87 9 is_stmt 1 view .LVU42
- 238 004e 2448     		ldr	r0, .L18+16
- 239 0050 FFF7FEFF 		bl	drive_on
- 240              	.LVL18:
-  88:App/Src/app.c ****         drive_on(&drv_r);
- 241              		.loc 1 88 9 view .LVU43
- 242 0054 2348     		ldr	r0, .L18+20
- 243 0056 FFF7FEFF 		bl	drive_on
- 244              	.LVL19:
- 245              	.L10:
-  89:App/Src/app.c ****     }
-  90:App/Src/app.c ****     if (strcmp(word_arr[0], "stop") == 0 || strcmp(word_arr[0], "STOP") == 0)
-ARM GAS  /tmp/cc8IDBuz.s 			page 7
+  77:App/Src/app.c ****         uart_send_mes_IT("drives\n");
+  78:App/Src/app.c ****     }
+  79:App/Src/app.c **** 
+  80:App/Src/app.c ****     if (strcmp(word_arr[0], "start") == 0 || strcmp(word_arr[0], "START") == 0)
+ 262              		.loc 1 80 5 is_stmt 1 view .LVU42
+ 263              		.loc 1 80 9 is_stmt 0 view .LVU43
+ 264 0046 2A49     		ldr	r1, .L20+12
+ 265 0048 2046     		mov	r0, r4
+ 266 004a FFF7FEFF 		bl	strcmp
+ 267              	.LVL20:
+ 268              		.loc 1 80 8 view .LVU44
+ 269 004e 20B1     		cbz	r0, .L10
+ 270              		.loc 1 80 46 discriminator 1 view .LVU45
+ 271 0050 2849     		ldr	r1, .L20+16
+ 272 0052 2046     		mov	r0, r4
+ 273 0054 FFF7FEFF 		bl	strcmp
+ 274              	.LVL21:
+ 275              		.loc 1 80 43 discriminator 1 view .LVU46
+ 276 0058 28B9     		cbnz	r0, .L11
+ 277              	.L10:
+  81:App/Src/app.c ****     {
+  82:App/Src/app.c **** 
+  83:App/Src/app.c ****         drive_on(&drv_l);
+ 278              		.loc 1 83 9 is_stmt 1 view .LVU47
+ 279 005a 2748     		ldr	r0, .L20+20
+ 280 005c FFF7FEFF 		bl	drive_on
+ 281              	.LVL22:
+  84:App/Src/app.c ****         drive_on(&drv_r);
+ 282              		.loc 1 84 9 view .LVU48
+ 283 0060 2648     		ldr	r0, .L20+24
+ 284 0062 FFF7FEFF 		bl	drive_on
+ 285              	.LVL23:
+ 286              	.L11:
+  85:App/Src/app.c ****     }
+  86:App/Src/app.c ****     if (strcmp(word_arr[0], "stop") == 0 || strcmp(word_arr[0], "STOP") == 0)
+ 287              		.loc 1 86 5 view .LVU49
+ 288              		.loc 1 86 9 is_stmt 0 view .LVU50
+ 289 0066 2649     		ldr	r1, .L20+28
+ 290 0068 2046     		mov	r0, r4
+ 291 006a FFF7FEFF 		bl	strcmp
+ 292              	.LVL24:
+ 293              		.loc 1 86 8 view .LVU51
+ 294 006e 20B1     		cbz	r0, .L12
+ 295              		.loc 1 86 45 discriminator 1 view .LVU52
+ 296 0070 2449     		ldr	r1, .L20+32
+ 297 0072 2046     		mov	r0, r4
+ 298 0074 FFF7FEFF 		bl	strcmp
+ 299              	.LVL25:
+ 300              		.loc 1 86 42 discriminator 1 view .LVU53
+ 301 0078 28B9     		cbnz	r0, .L13
+ARM GAS  /tmp/cco9LWb0.s 			page 8
 
 
- 246              		.loc 1 90 5 view .LVU44
- 247              		.loc 1 90 9 is_stmt 0 view .LVU45
- 248 005a 2349     		ldr	r1, .L18+24
- 249 005c 2046     		mov	r0, r4
- 250 005e FFF7FEFF 		bl	strcmp
- 251              	.LVL20:
- 252              		.loc 1 90 8 view .LVU46
- 253 0062 20B1     		cbz	r0, .L11
- 254              		.loc 1 90 45 discriminator 1 view .LVU47
- 255 0064 2149     		ldr	r1, .L18+28
- 256 0066 2046     		mov	r0, r4
- 257 0068 FFF7FEFF 		bl	strcmp
- 258              	.LVL21:
- 259              		.loc 1 90 42 discriminator 1 view .LVU48
- 260 006c 28B9     		cbnz	r0, .L12
- 261              	.L11:
-  91:App/Src/app.c ****     {
-  92:App/Src/app.c **** 
-  93:App/Src/app.c ****         drive_off(&drv_l);
- 262              		.loc 1 93 9 is_stmt 1 view .LVU49
- 263 006e 1C48     		ldr	r0, .L18+16
- 264 0070 FFF7FEFF 		bl	drive_off
- 265              	.LVL22:
-  94:App/Src/app.c ****         drive_off(&drv_r);
- 266              		.loc 1 94 9 view .LVU50
- 267 0074 1B48     		ldr	r0, .L18+20
- 268 0076 FFF7FEFF 		bl	drive_off
- 269              	.LVL23:
- 270              	.L12:
-  95:App/Src/app.c ****     }
-  96:App/Src/app.c ****     if (strcmp(word_arr[0], "r") == 0 || (strcmp(word_arr[0], "R") == 0))
- 271              		.loc 1 96 5 view .LVU51
- 272              		.loc 1 96 9 is_stmt 0 view .LVU52
- 273 007a 1D49     		ldr	r1, .L18+32
- 274 007c 2046     		mov	r0, r4
- 275 007e FFF7FEFF 		bl	strcmp
- 276              	.LVL24:
- 277              		.loc 1 96 8 view .LVU53
- 278 0082 20B1     		cbz	r0, .L13
- 279              		.loc 1 96 43 discriminator 1 view .LVU54
- 280 0084 1B49     		ldr	r1, .L18+36
- 281 0086 2046     		mov	r0, r4
- 282 0088 FFF7FEFF 		bl	strcmp
- 283              	.LVL25:
- 284              		.loc 1 96 39 discriminator 1 view .LVU55
- 285 008c 38B9     		cbnz	r0, .L14
- 286              	.L13:
- 287              	.LBB2:
-  97:App/Src/app.c ****     {
-  98:App/Src/app.c **** 
-  99:App/Src/app.c ****         vel = atoi(word_arr[1]);
- 288              		.loc 1 99 9 is_stmt 1 view .LVU56
- 289              		.loc 1 99 15 is_stmt 0 view .LVU57
- 290 008e 0398     		ldr	r0, [sp, #12]
- 291 0090 FFF7FEFF 		bl	atoi
- 292              	.LVL26:
- 293              		.loc 1 99 13 view .LVU58
-ARM GAS  /tmp/cc8IDBuz.s 			page 8
+ 302              	.L12:
+  87:App/Src/app.c ****     {
+  88:App/Src/app.c **** 
+  89:App/Src/app.c ****         drive_off(&drv_l);
+ 303              		.loc 1 89 9 is_stmt 1 view .LVU54
+ 304 007a 1F48     		ldr	r0, .L20+20
+ 305 007c FFF7FEFF 		bl	drive_off
+ 306              	.LVL26:
+  90:App/Src/app.c ****         drive_off(&drv_r);
+ 307              		.loc 1 90 9 view .LVU55
+ 308 0080 1E48     		ldr	r0, .L20+24
+ 309 0082 FFF7FEFF 		bl	drive_off
+ 310              	.LVL27:
+ 311              	.L13:
+  91:App/Src/app.c ****     }
+  92:App/Src/app.c ****     if (strcmp(word_arr[0], "r") == 0 || (strcmp(word_arr[0], "R") == 0))
+ 312              		.loc 1 92 5 view .LVU56
+ 313              		.loc 1 92 9 is_stmt 0 view .LVU57
+ 314 0086 2049     		ldr	r1, .L20+36
+ 315 0088 2046     		mov	r0, r4
+ 316 008a FFF7FEFF 		bl	strcmp
+ 317              	.LVL28:
+ 318              		.loc 1 92 8 view .LVU58
+ 319 008e 20B1     		cbz	r0, .L14
+ 320              		.loc 1 92 43 discriminator 1 view .LVU59
+ 321 0090 1E49     		ldr	r1, .L20+40
+ 322 0092 2046     		mov	r0, r4
+ 323 0094 FFF7FEFF 		bl	strcmp
+ 324              	.LVL29:
+ 325              		.loc 1 92 39 discriminator 1 view .LVU60
+ 326 0098 38B9     		cbnz	r0, .L15
+ 327              	.L14:
+ 328              	.LBB2:
+  93:App/Src/app.c ****     {
+  94:App/Src/app.c **** 
+  95:App/Src/app.c ****         vel = atoi(word_arr[1]);
+ 329              		.loc 1 95 9 is_stmt 1 view .LVU61
+ 330              		.loc 1 95 15 is_stmt 0 view .LVU62
+ 331 009a 0398     		ldr	r0, [sp, #12]
+ 332 009c FFF7FEFF 		bl	atoi
+ 333              	.LVL30:
+ 334              		.loc 1 95 13 view .LVU63
+ 335 00a0 0190     		str	r0, [sp, #4]
+  96:App/Src/app.c ****         drive_set_vel(&drv_r, vel);
+ 336              		.loc 1 96 9 is_stmt 1 view .LVU64
+ 337 00a2 0199     		ldr	r1, [sp, #4]
+ 338 00a4 1548     		ldr	r0, .L20+24
+ 339 00a6 FFF7FEFF 		bl	drive_set_vel
+ 340              	.LVL31:
+ 341              	.L15:
+ 342              	.LBE2:
+  97:App/Src/app.c ****     }
+  98:App/Src/app.c ****     if (strcmp(word_arr[0], "l") == 0 || strcmp(word_arr[0], "L") == 0)
+ 343              		.loc 1 98 5 view .LVU65
+ 344              		.loc 1 98 9 is_stmt 0 view .LVU66
+ 345 00aa 1949     		ldr	r1, .L20+44
+ 346 00ac 2046     		mov	r0, r4
+ARM GAS  /tmp/cco9LWb0.s 			page 9
 
 
- 294 0094 0190     		str	r0, [sp, #4]
- 100:App/Src/app.c ****         drive_set_vel(&drv_r, vel);
- 295              		.loc 1 100 9 is_stmt 1 view .LVU59
- 296 0096 0199     		ldr	r1, [sp, #4]
- 297 0098 1248     		ldr	r0, .L18+20
- 298 009a FFF7FEFF 		bl	drive_set_vel
- 299              	.LVL27:
- 300              	.L14:
- 301              	.LBE2:
- 101:App/Src/app.c ****     }
- 102:App/Src/app.c ****     if (strcmp(word_arr[0], "l") == 0 || strcmp(word_arr[0], "L") == 0)
- 302              		.loc 1 102 5 view .LVU60
- 303              		.loc 1 102 9 is_stmt 0 view .LVU61
- 304 009e 1649     		ldr	r1, .L18+40
- 305 00a0 2046     		mov	r0, r4
- 306 00a2 FFF7FEFF 		bl	strcmp
- 307              	.LVL28:
- 308              		.loc 1 102 8 view .LVU62
- 309 00a6 20B1     		cbz	r0, .L15
- 310              		.loc 1 102 42 discriminator 1 view .LVU63
- 311 00a8 1449     		ldr	r1, .L18+44
- 312 00aa 2046     		mov	r0, r4
- 313 00ac FFF7FEFF 		bl	strcmp
- 314              	.LVL29:
- 315              		.loc 1 102 39 discriminator 1 view .LVU64
- 316 00b0 38B9     		cbnz	r0, .L16
- 317              	.L15:
- 318              	.LBB3:
- 103:App/Src/app.c ****     {
- 104:App/Src/app.c ****         vel = atoi(word_arr[1]);
- 319              		.loc 1 104 9 is_stmt 1 view .LVU65
- 320              		.loc 1 104 15 is_stmt 0 view .LVU66
- 321 00b2 0398     		ldr	r0, [sp, #12]
- 322 00b4 FFF7FEFF 		bl	atoi
- 323              	.LVL30:
- 324              		.loc 1 104 13 view .LVU67
- 325 00b8 0190     		str	r0, [sp, #4]
- 105:App/Src/app.c ****         drive_set_vel(&drv_l, vel);
- 326              		.loc 1 105 9 is_stmt 1 view .LVU68
- 327 00ba 0199     		ldr	r1, [sp, #4]
- 328 00bc 0848     		ldr	r0, .L18+16
- 329 00be FFF7FEFF 		bl	drive_set_vel
- 330              	.LVL31:
- 331              	.L16:
- 332              	.LBE3:
- 106:App/Src/app.c ****     }
- 107:App/Src/app.c ****     command[0] = '\0';
- 333              		.loc 1 107 5 view .LVU69
- 334              		.loc 1 107 16 is_stmt 0 view .LVU70
- 335 00c2 0448     		ldr	r0, .L18+4
- 336 00c4 0023     		movs	r3, #0
- 337 00c6 0370     		strb	r3, [r0]
- 108:App/Src/app.c ****     uart_ask_str_IT(command);
- 338              		.loc 1 108 5 is_stmt 1 view .LVU71
- 339 00c8 FFF7FEFF 		bl	uart_ask_str_IT
- 340              	.LVL32:
- 109:App/Src/app.c **** }
-ARM GAS  /tmp/cc8IDBuz.s 			page 9
+ 347 00ae FFF7FEFF 		bl	strcmp
+ 348              	.LVL32:
+ 349              		.loc 1 98 8 view .LVU67
+ 350 00b2 20B1     		cbz	r0, .L16
+ 351              		.loc 1 98 42 discriminator 1 view .LVU68
+ 352 00b4 1749     		ldr	r1, .L20+48
+ 353 00b6 2046     		mov	r0, r4
+ 354 00b8 FFF7FEFF 		bl	strcmp
+ 355              	.LVL33:
+ 356              		.loc 1 98 39 discriminator 1 view .LVU69
+ 357 00bc 38B9     		cbnz	r0, .L17
+ 358              	.L16:
+ 359              	.LBB3:
+  99:App/Src/app.c ****     {
+ 100:App/Src/app.c ****         vel = atoi(word_arr[1]);
+ 360              		.loc 1 100 9 is_stmt 1 view .LVU70
+ 361              		.loc 1 100 15 is_stmt 0 view .LVU71
+ 362 00be 0398     		ldr	r0, [sp, #12]
+ 363 00c0 FFF7FEFF 		bl	atoi
+ 364              	.LVL34:
+ 365              		.loc 1 100 13 view .LVU72
+ 366 00c4 0190     		str	r0, [sp, #4]
+ 101:App/Src/app.c ****         drive_set_vel(&drv_l, vel);
+ 367              		.loc 1 101 9 is_stmt 1 view .LVU73
+ 368 00c6 0199     		ldr	r1, [sp, #4]
+ 369 00c8 0B48     		ldr	r0, .L20+20
+ 370 00ca FFF7FEFF 		bl	drive_set_vel
+ 371              	.LVL35:
+ 372              	.L17:
+ 373              	.LBE3:
+ 102:App/Src/app.c ****     }
+ 103:App/Src/app.c ****     command[0] = '\0';
+ 374              		.loc 1 103 5 view .LVU74
+ 375              		.loc 1 103 16 is_stmt 0 view .LVU75
+ 376 00ce 0648     		ldr	r0, .L20+4
+ 377 00d0 0023     		movs	r3, #0
+ 378 00d2 0370     		strb	r3, [r0]
+ 104:App/Src/app.c ****     uart_ask_str_IT(command);
+ 379              		.loc 1 104 5 is_stmt 1 view .LVU76
+ 380 00d4 FFF7FEFF 		bl	uart_ask_str_IT
+ 381              	.LVL36:
+ 105:App/Src/app.c **** }
+ 382              		.loc 1 105 1 is_stmt 0 view .LVU77
+ 383 00d8 0CB0     		add	sp, sp, #48
+ 384              	.LCFI4:
+ 385              		.cfi_remember_state
+ 386              		.cfi_def_cfa_offset 8
+ 387              		@ sp needed
+ 388 00da 10BD     		pop	{r4, pc}
+ 389              	.L19:
+ 390              	.LCFI5:
+ 391              		.cfi_restore_state
+  77:App/Src/app.c ****     }
+ 392              		.loc 1 77 9 is_stmt 1 view .LVU78
+ 393 00dc 0E48     		ldr	r0, .L20+52
+ 394 00de FFF7FEFF 		bl	uart_send_mes_IT
+ 395              	.LVL37:
+ARM GAS  /tmp/cco9LWb0.s 			page 10
 
 
- 341              		.loc 1 109 1 is_stmt 0 view .LVU72
- 342 00cc 0CB0     		add	sp, sp, #48
- 343              	.LCFI4:
- 344              		.cfi_def_cfa_offset 8
- 345              		@ sp needed
- 346 00ce 10BD     		pop	{r4, pc}
- 347              	.L19:
- 348              		.align	2
- 349              	.L18:
- 350 00d0 00000000 		.word	.LC1
- 351 00d4 00000000 		.word	.LANCHOR0
- 352 00d8 04000000 		.word	.LC2
- 353 00dc 0C000000 		.word	.LC3
- 354 00e0 00000000 		.word	.LANCHOR1
- 355 00e4 00000000 		.word	.LANCHOR2
- 356 00e8 14000000 		.word	.LC4
- 357 00ec 1C000000 		.word	.LC5
- 358 00f0 24000000 		.word	.LC6
- 359 00f4 28000000 		.word	.LC7
- 360 00f8 2C000000 		.word	.LC8
- 361 00fc 30000000 		.word	.LC9
- 362              		.cfi_endproc
- 363              	.LFE69:
- 365              		.global	val
- 366              		.global	flag
- 367              		.global	command
- 368              		.section	.bss.command,"aw",%nobits
- 369              		.align	2
- 370              		.set	.LANCHOR0,. + 0
- 373              	command:
- 374 0000 00000000 		.space	32
- 374      00000000 
- 374      00000000 
- 374      00000000 
- 374      00000000 
- 375              		.section	.bss.drv_l,"aw",%nobits
- 376              		.align	2
- 377              		.set	.LANCHOR1,. + 0
- 380              	drv_l:
- 381 0000 00000000 		.space	32
- 381      00000000 
- 381      00000000 
- 381      00000000 
- 381      00000000 
- 382              		.section	.bss.drv_r,"aw",%nobits
- 383              		.align	2
- 384              		.set	.LANCHOR2,. + 0
- 387              	drv_r:
- 388 0000 00000000 		.space	32
- 388      00000000 
- 388      00000000 
- 388      00000000 
- 388      00000000 
- 389              		.section	.bss.flag,"aw",%nobits
- 392              	flag:
- 393 0000 00       		.space	1
- 394              		.section	.bss.val,"aw",%nobits
-ARM GAS  /tmp/cc8IDBuz.s 			page 10
+ 396 00e2 B0E7     		b	.L9
+ 397              	.L21:
+ 398              		.align	2
+ 399              	.L20:
+ 400 00e4 00000000 		.word	.LC2
+ 401 00e8 00000000 		.word	.LANCHOR0
+ 402 00ec 04000000 		.word	.LC3
+ 403 00f0 18000000 		.word	.LC5
+ 404 00f4 20000000 		.word	.LC6
+ 405 00f8 00000000 		.word	.LANCHOR1
+ 406 00fc 00000000 		.word	.LANCHOR2
+ 407 0100 28000000 		.word	.LC7
+ 408 0104 30000000 		.word	.LC8
+ 409 0108 38000000 		.word	.LC9
+ 410 010c 3C000000 		.word	.LC10
+ 411 0110 40000000 		.word	.LC11
+ 412 0114 44000000 		.word	.LC12
+ 413 0118 10000000 		.word	.LC4
+ 414              		.cfi_endproc
+ 415              	.LFE69:
+ 417              		.section	.text.HAL_TIM_PeriodElapsedCallback,"ax",%progbits
+ 418              		.align	1
+ 419              		.global	HAL_TIM_PeriodElapsedCallback
+ 420              		.syntax unified
+ 421              		.thumb
+ 422              		.thumb_func
+ 424              	HAL_TIM_PeriodElapsedCallback:
+ 425              	.LVL38:
+ 426              	.LFB70:
+ 106:App/Src/app.c **** 
+ 107:App/Src/app.c **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+ 108:App/Src/app.c **** {
+ 427              		.loc 1 108 1 view -0
+ 428              		.cfi_startproc
+ 429              		@ args = 0, pretend = 0, frame = 0
+ 430              		@ frame_needed = 0, uses_anonymous_args = 0
+ 431              		.loc 1 108 1 is_stmt 0 view .LVU80
+ 432 0000 08B5     		push	{r3, lr}
+ 433              	.LCFI6:
+ 434              		.cfi_def_cfa_offset 8
+ 435              		.cfi_offset 3, -8
+ 436              		.cfi_offset 14, -4
+ 109:App/Src/app.c ****     if (htim->Instance == TIM2)
+ 437              		.loc 1 109 5 is_stmt 1 view .LVU81
+ 438              		.loc 1 109 13 is_stmt 0 view .LVU82
+ 439 0002 0368     		ldr	r3, [r0]
+ 440              		.loc 1 109 8 view .LVU83
+ 441 0004 B3F1804F 		cmp	r3, #1073741824
+ 442 0008 00D0     		beq	.L25
+ 443              	.LVL39:
+ 444              	.L22:
+ 110:App/Src/app.c ****     {
+ 111:App/Src/app.c ****         drive_increese_speed(&drv_l);
+ 112:App/Src/app.c ****         drive_increese_speed(&drv_r);
+ 113:App/Src/app.c ****     }
+ 114:App/Src/app.c **** 
+ 115:App/Src/app.c ****     // if (htim->Instance == TIM4)
+ARM GAS  /tmp/cco9LWb0.s 			page 11
 
 
- 395              		.align	2
- 398              	val:
- 399 0000 00000000 		.space	4
- 400              		.text
- 401              	.Letext0:
- 402              		.file 2 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_defau
- 403              		.file 3 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 404              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 405              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 406              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 407              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
- 408              		.file 8 "Core/Inc/tim.h"
- 409              		.file 9 "BSP/Inc/drive.h"
- 410              		.file 10 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/string.h"
- 411              		.file 11 "BSP/Inc/uart_app.h"
-ARM GAS  /tmp/cc8IDBuz.s 			page 11
+ 116:App/Src/app.c ****     //     driveElapsedCallback(&drv_l);
+ 117:App/Src/app.c ****     // if (htim->Instance == TIM3)
+ 118:App/Src/app.c ****     //     driveElapsedCallback(&drv_r);
+ 119:App/Src/app.c **** }
+ 445              		.loc 1 119 1 view .LVU84
+ 446 000a 08BD     		pop	{r3, pc}
+ 447              	.LVL40:
+ 448              	.L25:
+ 111:App/Src/app.c ****         drive_increese_speed(&drv_r);
+ 449              		.loc 1 111 9 is_stmt 1 view .LVU85
+ 450 000c 0348     		ldr	r0, .L26
+ 451              	.LVL41:
+ 111:App/Src/app.c ****         drive_increese_speed(&drv_r);
+ 452              		.loc 1 111 9 is_stmt 0 view .LVU86
+ 453 000e FFF7FEFF 		bl	drive_increese_speed
+ 454              	.LVL42:
+ 112:App/Src/app.c ****     }
+ 455              		.loc 1 112 9 is_stmt 1 view .LVU87
+ 456 0012 0348     		ldr	r0, .L26+4
+ 457 0014 FFF7FEFF 		bl	drive_increese_speed
+ 458              	.LVL43:
+ 459              		.loc 1 119 1 is_stmt 0 view .LVU88
+ 460 0018 F7E7     		b	.L22
+ 461              	.L27:
+ 462 001a 00BF     		.align	2
+ 463              	.L26:
+ 464 001c 00000000 		.word	.LANCHOR1
+ 465 0020 00000000 		.word	.LANCHOR2
+ 466              		.cfi_endproc
+ 467              	.LFE70:
+ 469              		.global	val
+ 470              		.global	flag
+ 471              		.global	command
+ 472              		.section	.bss.command,"aw",%nobits
+ 473              		.align	2
+ 474              		.set	.LANCHOR0,. + 0
+ 477              	command:
+ 478 0000 00000000 		.space	32
+ 478      00000000 
+ 478      00000000 
+ 478      00000000 
+ 478      00000000 
+ 479              		.section	.bss.drv_l,"aw",%nobits
+ 480              		.align	2
+ 481              		.set	.LANCHOR1,. + 0
+ 484              	drv_l:
+ 485 0000 00000000 		.space	56
+ 485      00000000 
+ 485      00000000 
+ 485      00000000 
+ 485      00000000 
+ 486              		.section	.bss.drv_r,"aw",%nobits
+ 487              		.align	2
+ 488              		.set	.LANCHOR2,. + 0
+ 491              	drv_r:
+ 492 0000 00000000 		.space	56
+ 492      00000000 
+ARM GAS  /tmp/cco9LWb0.s 			page 12
+
+
+ 492      00000000 
+ 492      00000000 
+ 492      00000000 
+ 493              		.section	.bss.flag,"aw",%nobits
+ 496              	flag:
+ 497 0000 00       		.space	1
+ 498              		.section	.bss.val,"aw",%nobits
+ 499              		.align	2
+ 502              	val:
+ 503 0000 00000000 		.space	4
+ 504              		.text
+ 505              	.Letext0:
+ 506              		.file 2 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_defau
+ 507              		.file 3 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 508              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 509              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 510              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 511              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 512              		.file 8 "Core/Inc/tim.h"
+ 513              		.file 9 "BSP/Inc/drive.h"
+ 514              		.file 10 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/string.h"
+ 515              		.file 11 "BSP/Inc/uart_app.h"
+ 516              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 517              		.file 13 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdio.h"
+ 518              		.file 14 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/cco9LWb0.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 app.c
-     /tmp/cc8IDBuz.s:18     .rodata.app.str1.4:0000000000000000 $d
-     /tmp/cc8IDBuz.s:22     .text.app:0000000000000000 $t
-     /tmp/cc8IDBuz.s:28     .text.app:0000000000000000 app
-     /tmp/cc8IDBuz.s:104    .text.app:0000000000000064 $d
-     /tmp/cc8IDBuz.s:116    .rodata.uart_str_RxCPLTCallback.str1.4:0000000000000000 $d
-     /tmp/cc8IDBuz.s:144    .text.uart_str_RxCPLTCallback:0000000000000000 $t
-     /tmp/cc8IDBuz.s:150    .text.uart_str_RxCPLTCallback:0000000000000000 uart_str_RxCPLTCallback
-     /tmp/cc8IDBuz.s:350    .text.uart_str_RxCPLTCallback:00000000000000d0 $d
-     /tmp/cc8IDBuz.s:398    .bss.val:0000000000000000 val
-     /tmp/cc8IDBuz.s:392    .bss.flag:0000000000000000 flag
-     /tmp/cc8IDBuz.s:373    .bss.command:0000000000000000 command
-     /tmp/cc8IDBuz.s:369    .bss.command:0000000000000000 $d
-     /tmp/cc8IDBuz.s:376    .bss.drv_l:0000000000000000 $d
-     /tmp/cc8IDBuz.s:380    .bss.drv_l:0000000000000000 drv_l
-     /tmp/cc8IDBuz.s:383    .bss.drv_r:0000000000000000 $d
-     /tmp/cc8IDBuz.s:387    .bss.drv_r:0000000000000000 drv_r
-     /tmp/cc8IDBuz.s:393    .bss.flag:0000000000000000 $d
-     /tmp/cc8IDBuz.s:395    .bss.val:0000000000000000 $d
+     /tmp/cco9LWb0.s:18     .rodata.app.str1.4:0000000000000000 $d
+     /tmp/cco9LWb0.s:25     .text.app:0000000000000000 $t
+     /tmp/cco9LWb0.s:31     .text.app:0000000000000000 app
+     /tmp/cco9LWb0.s:126    .text.app:000000000000008c $d
+     /tmp/cco9LWb0.s:141    .rodata.uart_str_RxCPLTCallback.str1.4:0000000000000000 $d
+     /tmp/cco9LWb0.s:175    .text.uart_str_RxCPLTCallback:0000000000000000 $t
+     /tmp/cco9LWb0.s:181    .text.uart_str_RxCPLTCallback:0000000000000000 uart_str_RxCPLTCallback
+     /tmp/cco9LWb0.s:400    .text.uart_str_RxCPLTCallback:00000000000000e4 $d
+     /tmp/cco9LWb0.s:418    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/cco9LWb0.s:424    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/cco9LWb0.s:464    .text.HAL_TIM_PeriodElapsedCallback:000000000000001c $d
+     /tmp/cco9LWb0.s:502    .bss.val:0000000000000000 val
+     /tmp/cco9LWb0.s:496    .bss.flag:0000000000000000 flag
+     /tmp/cco9LWb0.s:477    .bss.command:0000000000000000 command
+     /tmp/cco9LWb0.s:473    .bss.command:0000000000000000 $d
+     /tmp/cco9LWb0.s:480    .bss.drv_l:0000000000000000 $d
+     /tmp/cco9LWb0.s:484    .bss.drv_l:0000000000000000 drv_l
+     /tmp/cco9LWb0.s:487    .bss.drv_r:0000000000000000 $d
+     /tmp/cco9LWb0.s:491    .bss.drv_r:0000000000000000 drv_r
+     /tmp/cco9LWb0.s:497    .bss.flag:0000000000000000 $d
+     /tmp/cco9LWb0.s:499    .bss.val:0000000000000000 $d
 
 UNDEFINED SYMBOLS
-HAL_TIM_PWM_Stop_IT
 uart_send_mes
 uart_ask_str_IT
 drive_init
+HAL_TIM_Base_Start_IT
+HAL_GPIO_TogglePin
+sprintf
+uart_send_mes_IT
+HAL_Delay
 htim4
 htim3
+htim2
 strtok
 strcmp
 drive_on
 drive_off
 atoi
 drive_set_vel
+drive_increese_speed

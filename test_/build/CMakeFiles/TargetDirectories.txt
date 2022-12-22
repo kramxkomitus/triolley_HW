@@ -1,3 +1,0 @@
-/home/mark/workspace/trolley/test_/build/CMakeFiles/test_.elf.dir
-/home/mark/workspace/trolley/test_/build/CMakeFiles/edit_cache.dir
-/home/mark/workspace/trolley/test_/build/CMakeFiles/rebuild_cache.dir

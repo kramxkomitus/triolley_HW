@@ -15,10 +15,6 @@ static struct drive drv_l, drv_r;
 
 void app()
 {
-
-    HAL_TIM_PWM_Stop_IT(&htim4, TIM_CHANNEL_3); // b8   l
-    HAL_TIM_PWM_Stop_IT(&htim3, TIM_CHANNEL_2); // b8   l
-
     uart_send_mes("Hardware is started...\n", 100);
     uart_ask_str_IT(command);
 
@@ -30,7 +26,9 @@ void app()
         ENA_DRV_L_GPIO_Port,
         ENA_DRV_L_Pin,
         DIR_DRV_L_GPIO_Port,
-        DIR_DRV_L_Pin);
+        DIR_DRV_L_Pin,
+        10,
+        6400);
 
     drive_init(
         &drv_r,
@@ -40,27 +38,20 @@ void app()
         ENA_DRV_R_GPIO_Port,
         ENA_DRV_R_Pin,
         DIR_DRV_R_GPIO_Port,
-        DIR_DRV_R_Pin);
+        DIR_DRV_R_Pin,
+        3,
+        6400);
 
     int16_t i = 500;
-    uint8_t S[16];
-
-    // HAL_GPIO_WritePin(DIR_DRV_R_GPIO_Port, DIR_DRV_R_Pin, PIN_ON);
-    // HAL_GPIO_WritePin(DIR_DRV_R_GPIO_Port, DIR_DRV_R_Pin, PIN_OFF);
-    // HAL_GPIO_WritePin(ENA_DRV_R_GPIO_Port, ENA_DRV_R_Pin, PIN_ON);
-    // HAL_GPIO_WritePin(ENA_DRV_R_GPIO_Port, ENA_DRV_R_Pin, PIN_OFF);
-    // HAL_GPIO_WritePin(PWM_R_GPIO_Port, PWM_R_Pin, SET);
-    // HAL_GPIO_WritePin(PWM_R_GPIO_Port, PWM_R_Pin, RESET);
-
-    // HAL_GPIO_WritePin(DIR_DRV_L_GPIO_Port, DIR_DRV_L_Pin, PIN_ON);
-    // HAL_GPIO_WritePin(DIR_DRV_L_GPIO_Port, DIR_DRV_L_Pin, PIN_OFF);
-    // HAL_GPIO_WritePin(ENA_DRV_L_GPIO_Port, ENA_DRV_L_Pin, PIN_ON);
-    // HAL_GPIO_WritePin(ENA_DRV_L_GPIO_Port, ENA_DRV_L_Pin, PIN_OFF);
-    // HAL_GPIO_WritePin(PWM_L_GPIO_Port, PWM_L_Pin, SET);
-    // HAL_GPIO_WritePin(PWM_L_GPIO_Port, PWM_L_Pin, RESET);
+    uint8_t buffer[64];
+    HAL_TIM_Base_Start_IT(&htim2);
 
     while (true)
     {
+        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        sprintf(buffer, "L %d\t\t\tR%d\n", drv_l.current_speed, drv_r.current_speed);
+        uart_send_mes_IT(buffer);
+        HAL_Delay(100);
     }
 }
 
@@ -80,6 +71,11 @@ void uart_str_RxCPLTCallback()
         word = strtok(NULL, " ");
     }
     word_arr[i] = NULL;
+
+    if (strcmp(word_arr[0], "whoareyou") == 0)
+    {
+        uart_send_mes_IT("drives\n");
+    }
 
     if (strcmp(word_arr[0], "start") == 0 || strcmp(word_arr[0], "START") == 0)
     {
@@ -106,6 +102,20 @@ void uart_str_RxCPLTCallback()
     }
     command[0] = '\0';
     uart_ask_str_IT(command);
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if (htim->Instance == TIM2)
+    {
+        drive_increese_speed(&drv_l);
+        drive_increese_speed(&drv_r);
+    }
+
+    // if (htim->Instance == TIM4)
+    //     driveElapsedCallback(&drv_l);
+    // if (htim->Instance == TIM3)
+    //     driveElapsedCallback(&drv_r);
 }
 
 /*

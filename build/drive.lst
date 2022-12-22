@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccIDVogH.s 			page 1
+ARM GAS  /tmp/ccbMhrbE.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -29,437 +29,848 @@ ARM GAS  /tmp/ccIDVogH.s 			page 1
   27              		.file 1 "BSP/Src/drive.c"
    1:BSP/Src/drive.c **** #include "drive.h"
    2:BSP/Src/drive.c **** 
-   3:BSP/Src/drive.c **** void drive_init(
-   4:BSP/Src/drive.c ****     struct drive *D,
-   5:BSP/Src/drive.c ****     enum drv_location side,
-   6:BSP/Src/drive.c ****     TIM_HandleTypeDef *tim,
-   7:BSP/Src/drive.c ****     uint32_t tim_chanel,
-   8:BSP/Src/drive.c ****     uint32_t ena_pin_port,
-   9:BSP/Src/drive.c ****     uint32_t ena_pin,
-  10:BSP/Src/drive.c ****     uint32_t dir_pin_port,
-  11:BSP/Src/drive.c ****     uint32_t dir_pin)
-  12:BSP/Src/drive.c **** {
-  28              		.loc 1 12 1 view -0
+   3:BSP/Src/drive.c **** #define MAX_TIME_STEP 3000
+   4:BSP/Src/drive.c **** 
+   5:BSP/Src/drive.c **** void drive_init(
+   6:BSP/Src/drive.c ****     struct drive *D,
+   7:BSP/Src/drive.c ****     enum drv_location side,
+   8:BSP/Src/drive.c ****     TIM_HandleTypeDef *tim,
+   9:BSP/Src/drive.c ****     uint32_t tim_chanel,
+  10:BSP/Src/drive.c ****     uint32_t ena_pin_port,
+  11:BSP/Src/drive.c ****     uint32_t ena_pin,
+  12:BSP/Src/drive.c ****     uint32_t dir_pin_port,
+  13:BSP/Src/drive.c ****     uint32_t dir_pin,
+  14:BSP/Src/drive.c ****     uint32_t axeleration,
+  15:BSP/Src/drive.c ****     uint32_t PPR)
+  16:BSP/Src/drive.c **** {
+  28              		.loc 1 16 1 view -0
   29              		.cfi_startproc
-  30              		@ args = 16, pretend = 0, frame = 0
+  30              		@ args = 24, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              		@ link register save eliminated.
-  13:BSP/Src/drive.c ****     D->enable = false;
-  33              		.loc 1 13 5 view .LVU1
-  34              		.loc 1 13 15 is_stmt 0 view .LVU2
-  35 0000 4FF0000C 		mov	ip, #0
-  36 0004 80F800C0 		strb	ip, [r0]
-  14:BSP/Src/drive.c ****     D->side = side;
-  37              		.loc 1 14 5 is_stmt 1 view .LVU3
-  38              		.loc 1 14 13 is_stmt 0 view .LVU4
-  39 0008 4170     		strb	r1, [r0, #1]
-  15:BSP/Src/drive.c ****     D->direction = forward;
-  40              		.loc 1 15 5 is_stmt 1 view .LVU5
-  41              		.loc 1 15 18 is_stmt 0 view .LVU6
-  42 000a 80F802C0 		strb	ip, [r0, #2]
-  16:BSP/Src/drive.c ****     D->speed = 0;
-ARM GAS  /tmp/ccIDVogH.s 			page 2
+  33              		.loc 1 16 1 is_stmt 0 view .LVU1
+  34 0000 10B4     		push	{r4}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 4, -4
+  17:BSP/Src/drive.c ****     D->enable = false;
+  38              		.loc 1 17 5 is_stmt 1 view .LVU2
+  39              		.loc 1 17 15 is_stmt 0 view .LVU3
+  40 0002 0024     		movs	r4, #0
+  41 0004 0470     		strb	r4, [r0]
+ARM GAS  /tmp/ccbMhrbE.s 			page 2
 
 
-  43              		.loc 1 16 5 is_stmt 1 view .LVU7
-  44              		.loc 1 16 14 is_stmt 0 view .LVU8
-  45 000e A0F804C0 		strh	ip, [r0, #4]	@ movhi
-  17:BSP/Src/drive.c ****     D->tim = tim;
-  46              		.loc 1 17 5 is_stmt 1 view .LVU9
-  47              		.loc 1 17 12 is_stmt 0 view .LVU10
-  48 0012 8260     		str	r2, [r0, #8]
-  18:BSP/Src/drive.c ****     D->tim_chanel = tim_chanel;
-  49              		.loc 1 18 5 is_stmt 1 view .LVU11
-  50              		.loc 1 18 19 is_stmt 0 view .LVU12
-  51 0014 C360     		str	r3, [r0, #12]
-  19:BSP/Src/drive.c ****     D->ena_pin_port = ena_pin_port;
-  52              		.loc 1 19 5 is_stmt 1 view .LVU13
-  53              		.loc 1 19 21 is_stmt 0 view .LVU14
-  54 0016 009B     		ldr	r3, [sp]
-  55              	.LVL1:
-  56              		.loc 1 19 21 view .LVU15
-  57 0018 0361     		str	r3, [r0, #16]
-  20:BSP/Src/drive.c ****     D->ena_pin = ena_pin;
-  58              		.loc 1 20 5 is_stmt 1 view .LVU16
-  59              		.loc 1 20 16 is_stmt 0 view .LVU17
-  60 001a 019B     		ldr	r3, [sp, #4]
-  61 001c 4361     		str	r3, [r0, #20]
-  21:BSP/Src/drive.c ****     D->dir_pin_port = dir_pin_port;
-  62              		.loc 1 21 5 is_stmt 1 view .LVU18
-  63              		.loc 1 21 21 is_stmt 0 view .LVU19
-  64 001e 029B     		ldr	r3, [sp, #8]
-  65 0020 8361     		str	r3, [r0, #24]
-  22:BSP/Src/drive.c ****     D->dir_pin = dir_pin;
-  66              		.loc 1 22 5 is_stmt 1 view .LVU20
-  67              		.loc 1 22 16 is_stmt 0 view .LVU21
-  68 0022 039B     		ldr	r3, [sp, #12]
-  69 0024 C361     		str	r3, [r0, #28]
-  23:BSP/Src/drive.c **** }
-  70              		.loc 1 23 1 view .LVU22
-  71 0026 7047     		bx	lr
-  72              		.cfi_endproc
-  73              	.LFE65:
-  75              		.section	.text.drive_on,"ax",%progbits
-  76              		.align	1
-  77              		.global	drive_on
-  78              		.syntax unified
-  79              		.thumb
-  80              		.thumb_func
-  82              	drive_on:
-  83              	.LVL2:
-  84              	.LFB66:
-  24:BSP/Src/drive.c **** 
-  25:BSP/Src/drive.c **** void drive_on(struct drive *D)
-  26:BSP/Src/drive.c **** {
-  85              		.loc 1 26 1 is_stmt 1 view -0
-  86              		.cfi_startproc
-  87              		@ args = 0, pretend = 0, frame = 0
-  88              		@ frame_needed = 0, uses_anonymous_args = 0
-  89              		.loc 1 26 1 is_stmt 0 view .LVU24
-  90 0000 08B5     		push	{r3, lr}
-  91              	.LCFI0:
-ARM GAS  /tmp/ccIDVogH.s 			page 3
+  18:BSP/Src/drive.c ****     D->side = side;
+  42              		.loc 1 18 5 is_stmt 1 view .LVU4
+  43              		.loc 1 18 13 is_stmt 0 view .LVU5
+  44 0006 4170     		strb	r1, [r0, #1]
+  19:BSP/Src/drive.c ****     D->direction = forward;
+  45              		.loc 1 19 5 is_stmt 1 view .LVU6
+  46              		.loc 1 19 18 is_stmt 0 view .LVU7
+  47 0008 8470     		strb	r4, [r0, #2]
+  20:BSP/Src/drive.c ****     D->target_speed = 0;  // RPM
+  48              		.loc 1 20 5 is_stmt 1 view .LVU8
+  49              		.loc 1 20 21 is_stmt 0 view .LVU9
+  50 000a 4460     		str	r4, [r0, #4]
+  21:BSP/Src/drive.c ****     D->current_speed = 0; // RPM NU
+  51              		.loc 1 21 5 is_stmt 1 view .LVU10
+  52              		.loc 1 21 22 is_stmt 0 view .LVU11
+  53 000c 8460     		str	r4, [r0, #8]
+  22:BSP/Src/drive.c ****     D->target_step_time = MAX_TIME_STEP;
+  54              		.loc 1 22 5 is_stmt 1 view .LVU12
+  55              		.loc 1 22 25 is_stmt 0 view .LVU13
+  56 000e 40F6B831 		movw	r1, #3000
+  57              	.LVL1:
+  58              		.loc 1 22 25 view .LVU14
+  59 0012 C160     		str	r1, [r0, #12]
+  23:BSP/Src/drive.c ****     D->current_step_time = MAX_TIME_STEP;
+  60              		.loc 1 23 5 is_stmt 1 view .LVU15
+  61              		.loc 1 23 26 is_stmt 0 view .LVU16
+  62 0014 0161     		str	r1, [r0, #16]
+  24:BSP/Src/drive.c ****     D->tim = tim;
+  63              		.loc 1 24 5 is_stmt 1 view .LVU17
+  64              		.loc 1 24 12 is_stmt 0 view .LVU18
+  65 0016 C261     		str	r2, [r0, #28]
+  25:BSP/Src/drive.c ****     D->tim_chanel = tim_chanel;
+  66              		.loc 1 25 5 is_stmt 1 view .LVU19
+  67              		.loc 1 25 19 is_stmt 0 view .LVU20
+  68 0018 0362     		str	r3, [r0, #32]
+  26:BSP/Src/drive.c ****     D->ena_pin_port = ena_pin_port;
+  69              		.loc 1 26 5 is_stmt 1 view .LVU21
+  70              		.loc 1 26 21 is_stmt 0 view .LVU22
+  71 001a 019B     		ldr	r3, [sp, #4]
+  72              	.LVL2:
+  73              		.loc 1 26 21 view .LVU23
+  74 001c 4362     		str	r3, [r0, #36]
+  27:BSP/Src/drive.c ****     D->ena_pin = ena_pin;
+  75              		.loc 1 27 5 is_stmt 1 view .LVU24
+  76              		.loc 1 27 16 is_stmt 0 view .LVU25
+  77 001e 029B     		ldr	r3, [sp, #8]
+  78 0020 8362     		str	r3, [r0, #40]
+  28:BSP/Src/drive.c ****     D->dir_pin_port = dir_pin_port;
+  79              		.loc 1 28 5 is_stmt 1 view .LVU26
+  80              		.loc 1 28 21 is_stmt 0 view .LVU27
+  81 0022 039B     		ldr	r3, [sp, #12]
+  82 0024 C362     		str	r3, [r0, #44]
+  29:BSP/Src/drive.c ****     D->dir_pin = dir_pin;
+  83              		.loc 1 29 5 is_stmt 1 view .LVU28
+  84              		.loc 1 29 16 is_stmt 0 view .LVU29
+  85 0026 049B     		ldr	r3, [sp, #16]
+  86 0028 0363     		str	r3, [r0, #48]
+ARM GAS  /tmp/ccbMhrbE.s 			page 3
 
 
-  92              		.cfi_def_cfa_offset 8
-  93              		.cfi_offset 3, -8
-  94              		.cfi_offset 14, -4
-  27:BSP/Src/drive.c ****     D->enable = true;
-  95              		.loc 1 27 5 is_stmt 1 view .LVU25
-  96              		.loc 1 27 15 is_stmt 0 view .LVU26
-  97 0002 0122     		movs	r2, #1
-  98 0004 0270     		strb	r2, [r0]
-  28:BSP/Src/drive.c ****     HAL_GPIO_WritePin(D->ena_pin_port, D->ena_pin, SET);
-  99              		.loc 1 28 5 is_stmt 1 view .LVU27
- 100 0006 818A     		ldrh	r1, [r0, #20]
- 101 0008 0069     		ldr	r0, [r0, #16]
- 102              	.LVL3:
- 103              		.loc 1 28 5 is_stmt 0 view .LVU28
- 104 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
- 105              	.LVL4:
-  29:BSP/Src/drive.c ****     // HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
-  30:BSP/Src/drive.c **** }
- 106              		.loc 1 30 1 view .LVU29
- 107 000e 08BD     		pop	{r3, pc}
- 108              		.cfi_endproc
- 109              	.LFE66:
- 111              		.section	.text.drive_off,"ax",%progbits
- 112              		.align	1
- 113              		.global	drive_off
- 114              		.syntax unified
- 115              		.thumb
- 116              		.thumb_func
- 118              	drive_off:
- 119              	.LVL5:
- 120              	.LFB67:
-  31:BSP/Src/drive.c **** 
-  32:BSP/Src/drive.c **** void drive_off(struct drive *D)
-  33:BSP/Src/drive.c **** {
- 121              		.loc 1 33 1 is_stmt 1 view -0
- 122              		.cfi_startproc
- 123              		@ args = 0, pretend = 0, frame = 0
- 124              		@ frame_needed = 0, uses_anonymous_args = 0
- 125              		.loc 1 33 1 is_stmt 0 view .LVU31
- 126 0000 10B5     		push	{r4, lr}
- 127              	.LCFI1:
- 128              		.cfi_def_cfa_offset 8
- 129              		.cfi_offset 4, -8
- 130              		.cfi_offset 14, -4
- 131 0002 0446     		mov	r4, r0
-  34:BSP/Src/drive.c ****     D->enable = false;
- 132              		.loc 1 34 5 is_stmt 1 view .LVU32
- 133              		.loc 1 34 15 is_stmt 0 view .LVU33
- 134 0004 0022     		movs	r2, #0
- 135 0006 0270     		strb	r2, [r0]
-  35:BSP/Src/drive.c ****     HAL_GPIO_WritePin(D->ena_pin_port, D->ena_pin, RESET);
- 136              		.loc 1 35 5 is_stmt 1 view .LVU34
- 137 0008 818A     		ldrh	r1, [r0, #20]
- 138 000a 0069     		ldr	r0, [r0, #16]
- 139              	.LVL6:
- 140              		.loc 1 35 5 is_stmt 0 view .LVU35
- 141 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
-ARM GAS  /tmp/ccIDVogH.s 			page 4
+  30:BSP/Src/drive.c ****     D->PPR = PPR;
+  87              		.loc 1 30 5 is_stmt 1 view .LVU30
+  88              		.loc 1 30 12 is_stmt 0 view .LVU31
+  89 002a 069B     		ldr	r3, [sp, #24]
+  90 002c 4363     		str	r3, [r0, #52]
+  31:BSP/Src/drive.c ****     D->axeleration_step = axeleration;
+  91              		.loc 1 31 5 is_stmt 1 view .LVU32
+  92              		.loc 1 31 25 is_stmt 0 view .LVU33
+  93 002e 059B     		ldr	r3, [sp, #20]
+  94 0030 4361     		str	r3, [r0, #20]
+  32:BSP/Src/drive.c ****     // drive_set_axel(&D, axeleration);
+  33:BSP/Src/drive.c **** }
+  95              		.loc 1 33 1 view .LVU34
+  96 0032 10BC     		pop	{r4}
+  97              	.LCFI1:
+  98              		.cfi_restore 4
+  99              		.cfi_def_cfa_offset 0
+ 100              	.LVL3:
+ 101              		.loc 1 33 1 view .LVU35
+ 102 0034 7047     		bx	lr
+ 103              		.cfi_endproc
+ 104              	.LFE65:
+ 106              		.section	.text.drive_on,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	drive_on
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	drive_on:
+ 114              	.LVL4:
+ 115              	.LFB66:
+  34:BSP/Src/drive.c **** 
+  35:BSP/Src/drive.c **** void drive_on(struct drive *D)
+  36:BSP/Src/drive.c **** {
+ 116              		.loc 1 36 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		.loc 1 36 1 is_stmt 0 view .LVU37
+ 121 0000 08B5     		push	{r3, lr}
+ 122              	.LCFI2:
+ 123              		.cfi_def_cfa_offset 8
+ 124              		.cfi_offset 3, -8
+ 125              		.cfi_offset 14, -4
+  37:BSP/Src/drive.c ****     D->enable = true;
+ 126              		.loc 1 37 5 is_stmt 1 view .LVU38
+ 127              		.loc 1 37 15 is_stmt 0 view .LVU39
+ 128 0002 0122     		movs	r2, #1
+ 129 0004 0270     		strb	r2, [r0]
+  38:BSP/Src/drive.c ****     HAL_GPIO_WritePin(D->ena_pin_port, D->ena_pin, SET);
+ 130              		.loc 1 38 5 is_stmt 1 view .LVU40
+ 131 0006 018D     		ldrh	r1, [r0, #40]
+ 132 0008 406A     		ldr	r0, [r0, #36]
+ 133              	.LVL5:
+ 134              		.loc 1 38 5 is_stmt 0 view .LVU41
+ 135 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 136              	.LVL6:
+ARM GAS  /tmp/ccbMhrbE.s 			page 4
 
 
- 142              	.LVL7:
-  36:BSP/Src/drive.c ****     HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
- 143              		.loc 1 36 5 is_stmt 1 view .LVU36
- 144 0010 E168     		ldr	r1, [r4, #12]
- 145 0012 A068     		ldr	r0, [r4, #8]
- 146 0014 FFF7FEFF 		bl	HAL_TIM_PWM_Stop
- 147              	.LVL8:
-  37:BSP/Src/drive.c **** }
- 148              		.loc 1 37 1 is_stmt 0 view .LVU37
- 149 0018 10BD     		pop	{r4, pc}
- 150              		.loc 1 37 1 view .LVU38
- 151              		.cfi_endproc
- 152              	.LFE67:
- 154              		.section	.text.drive_set_vel,"ax",%progbits
- 155              		.align	1
- 156              		.global	drive_set_vel
- 157              		.syntax unified
- 158              		.thumb
- 159              		.thumb_func
- 161              	drive_set_vel:
- 162              	.LVL9:
- 163              	.LFB68:
-  38:BSP/Src/drive.c **** 
-  39:BSP/Src/drive.c **** bool drive_set_vel(struct drive *D, int32_t vel)
-  40:BSP/Src/drive.c **** {
- 164              		.loc 1 40 1 is_stmt 1 view -0
- 165              		.cfi_startproc
- 166              		@ args = 0, pretend = 0, frame = 0
- 167              		@ frame_needed = 0, uses_anonymous_args = 0
- 168              		.loc 1 40 1 is_stmt 0 view .LVU40
- 169 0000 70B5     		push	{r4, r5, r6, lr}
- 170              	.LCFI2:
- 171              		.cfi_def_cfa_offset 16
- 172              		.cfi_offset 4, -16
- 173              		.cfi_offset 5, -12
- 174              		.cfi_offset 6, -8
- 175              		.cfi_offset 14, -4
-  41:BSP/Src/drive.c ****     if (D->enable == false)
- 176              		.loc 1 41 5 is_stmt 1 view .LVU41
- 177              		.loc 1 41 10 is_stmt 0 view .LVU42
- 178 0002 0678     		ldrb	r6, [r0]	@ zero_extendqisi2
- 179              		.loc 1 41 8 view .LVU43
- 180 0004 002E     		cmp	r6, #0
- 181 0006 31D0     		beq	.L6
- 182 0008 0446     		mov	r4, r0
- 183 000a 0D46     		mov	r5, r1
-  42:BSP/Src/drive.c ****     {
-  43:BSP/Src/drive.c ****         return false;
-  44:BSP/Src/drive.c ****     }
-  45:BSP/Src/drive.c ****     else
-  46:BSP/Src/drive.c ****     {
-  47:BSP/Src/drive.c ****         // if ((vel < 1 && vel > 400) || (vel > -1 && vel < -400))
-  48:BSP/Src/drive.c ****         if ((vel < 150) && (vel > -150))
- 184              		.loc 1 48 9 is_stmt 1 view .LVU44
- 185              		.loc 1 48 25 is_stmt 0 view .LVU45
- 186 000c 01F19503 		add	r3, r1, #149
- 187              		.loc 1 48 12 view .LVU46
-ARM GAS  /tmp/ccIDVogH.s 			page 5
+  39:BSP/Src/drive.c **** }
+ 137              		.loc 1 39 1 view .LVU42
+ 138 000e 08BD     		pop	{r3, pc}
+ 139              		.cfi_endproc
+ 140              	.LFE66:
+ 142              		.section	.text.drive_off,"ax",%progbits
+ 143              		.align	1
+ 144              		.global	drive_off
+ 145              		.syntax unified
+ 146              		.thumb
+ 147              		.thumb_func
+ 149              	drive_off:
+ 150              	.LVL7:
+ 151              	.LFB67:
+  40:BSP/Src/drive.c **** 
+  41:BSP/Src/drive.c **** void drive_off(struct drive *D)
+  42:BSP/Src/drive.c **** {
+ 152              		.loc 1 42 1 is_stmt 1 view -0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		.loc 1 42 1 is_stmt 0 view .LVU44
+ 157 0000 10B5     		push	{r4, lr}
+ 158              	.LCFI3:
+ 159              		.cfi_def_cfa_offset 8
+ 160              		.cfi_offset 4, -8
+ 161              		.cfi_offset 14, -4
+ 162 0002 0446     		mov	r4, r0
+  43:BSP/Src/drive.c ****     D->enable = false;
+ 163              		.loc 1 43 5 is_stmt 1 view .LVU45
+ 164              		.loc 1 43 15 is_stmt 0 view .LVU46
+ 165 0004 0022     		movs	r2, #0
+ 166 0006 0270     		strb	r2, [r0]
+  44:BSP/Src/drive.c ****     HAL_GPIO_WritePin(D->ena_pin_port, D->ena_pin, RESET);
+ 167              		.loc 1 44 5 is_stmt 1 view .LVU47
+ 168 0008 018D     		ldrh	r1, [r0, #40]
+ 169 000a 406A     		ldr	r0, [r0, #36]
+ 170              	.LVL8:
+ 171              		.loc 1 44 5 is_stmt 0 view .LVU48
+ 172 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 173              	.LVL9:
+  45:BSP/Src/drive.c ****     HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
+ 174              		.loc 1 45 5 is_stmt 1 view .LVU49
+ 175 0010 216A     		ldr	r1, [r4, #32]
+ 176 0012 E069     		ldr	r0, [r4, #28]
+ 177 0014 FFF7FEFF 		bl	HAL_TIM_PWM_Stop
+ 178              	.LVL10:
+  46:BSP/Src/drive.c ****     HAL_TIM_Base_Stop_IT(D->tim);
+ 179              		.loc 1 46 5 view .LVU50
+ 180 0018 E069     		ldr	r0, [r4, #28]
+ 181 001a FFF7FEFF 		bl	HAL_TIM_Base_Stop_IT
+ 182              	.LVL11:
+  47:BSP/Src/drive.c **** }
+ 183              		.loc 1 47 1 is_stmt 0 view .LVU51
+ 184 001e 10BD     		pop	{r4, pc}
+ 185              		.loc 1 47 1 view .LVU52
+ 186              		.cfi_endproc
+ARM GAS  /tmp/ccbMhrbE.s 			page 5
 
 
- 188 0010 B3F5957F 		cmp	r3, #298
- 189 0014 2CD9     		bls	.L16
-  49:BSP/Src/drive.c ****         {
-  50:BSP/Src/drive.c ****             HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
-  51:BSP/Src/drive.c ****             return;
-  52:BSP/Src/drive.c ****         }
-  53:BSP/Src/drive.c ****         if (vel < 0)
- 190              		.loc 1 53 9 is_stmt 1 view .LVU47
- 191              		.loc 1 53 12 is_stmt 0 view .LVU48
- 192 0016 0029     		cmp	r1, #0
- 193 0018 2FDB     		blt	.L17
-  54:BSP/Src/drive.c ****         {
-  55:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
-  56:BSP/Src/drive.c ****             D->direction = backward;
-  57:BSP/Src/drive.c ****             vel = vel * (-1);
-  58:BSP/Src/drive.c ****         }
-  59:BSP/Src/drive.c ****         else
-  60:BSP/Src/drive.c ****         {
-  61:BSP/Src/drive.c ****             D->direction = forward;
- 194              		.loc 1 61 13 is_stmt 1 view .LVU49
- 195              		.loc 1 61 26 is_stmt 0 view .LVU50
- 196 001a 0022     		movs	r2, #0
- 197 001c 8270     		strb	r2, [r0, #2]
-  62:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_ON);
- 198              		.loc 1 62 13 is_stmt 1 view .LVU51
- 199 001e 818B     		ldrh	r1, [r0, #28]
- 200              	.LVL10:
- 201              		.loc 1 62 13 is_stmt 0 view .LVU52
- 202 0020 8069     		ldr	r0, [r0, #24]
- 203              	.LVL11:
- 204              		.loc 1 62 13 view .LVU53
- 205 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 206              	.LVL12:
- 207              	.L10:
-  63:BSP/Src/drive.c ****         }
-  64:BSP/Src/drive.c **** 
-  65:BSP/Src/drive.c ****         D->speed = 48000000 / (((vel) * 6400) / 60);
- 208              		.loc 1 65 9 is_stmt 1 view .LVU54
- 209              		.loc 1 65 39 is_stmt 0 view .LVU55
- 210 0026 4FF4C851 		mov	r1, #6400
- 211 002a 01FB05F5 		mul	r5, r1, r5
- 212              	.LVL13:
- 213              		.loc 1 65 47 view .LVU56
- 214 002e 224B     		ldr	r3, .L20
- 215 0030 83FB0523 		smull	r2, r3, r3, r5
- 216 0034 2B44     		add	r3, r3, r5
- 217 0036 ED17     		asrs	r5, r5, #31
- 218 0038 C5EB6315 		rsb	r5, r5, r3, asr #5
- 219              		.loc 1 65 29 view .LVU57
- 220 003c 1F4B     		ldr	r3, .L20+4
- 221 003e 93FBF5F5 		sdiv	r5, r3, r5
- 222              		.loc 1 65 18 view .LVU58
- 223 0042 ADB2     		uxth	r5, r5
- 224 0044 A580     		strh	r5, [r4, #4]	@ movhi
-  66:BSP/Src/drive.c ****         __HAL_TIM_SetAutoreload(D->tim, D->speed - 1);
- 225              		.loc 1 66 9 is_stmt 1 view .LVU59
- 226              		.loc 1 66 9 view .LVU60
-ARM GAS  /tmp/ccIDVogH.s 			page 6
+ 187              	.LFE67:
+ 189              		.section	.text.drive_set_axel,"ax",%progbits
+ 190              		.align	1
+ 191              		.global	drive_set_axel
+ 192              		.syntax unified
+ 193              		.thumb
+ 194              		.thumb_func
+ 196              	drive_set_axel:
+ 197              	.LVL12:
+ 198              	.LFB68:
+  48:BSP/Src/drive.c **** 
+  49:BSP/Src/drive.c **** bool drive_set_axel(struct drive *D, uint32_t axeleration)
+  50:BSP/Src/drive.c **** {
+ 199              		.loc 1 50 1 is_stmt 1 view -0
+ 200              		.cfi_startproc
+ 201              		@ args = 0, pretend = 0, frame = 0
+ 202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 203              		.loc 1 50 1 is_stmt 0 view .LVU54
+ 204 0000 08B5     		push	{r3, lr}
+ 205              	.LCFI4:
+ 206              		.cfi_def_cfa_offset 8
+ 207              		.cfi_offset 3, -8
+ 208              		.cfi_offset 14, -4
+  51:BSP/Src/drive.c ****     // нужно написать нормальный пересчет единиц
+  52:BSP/Src/drive.c ****     // не работает
+  53:BSP/Src/drive.c ****     D->axeleration_step = axeleration;
+ 209              		.loc 1 53 5 is_stmt 1 view .LVU55
+ 210              		.loc 1 53 25 is_stmt 0 view .LVU56
+ 211 0002 4161     		str	r1, [r0, #20]
+  54:BSP/Src/drive.c ****     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 212              		.loc 1 54 5 is_stmt 1 view .LVU57
+ 213 0004 4FF40051 		mov	r1, #8192
+ 214              	.LVL13:
+ 215              		.loc 1 54 5 is_stmt 0 view .LVU58
+ 216 0008 0148     		ldr	r0, .L9
+ 217              	.LVL14:
+ 218              		.loc 1 54 5 view .LVU59
+ 219 000a FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 220              	.LVL15:
+  55:BSP/Src/drive.c **** }
+ 221              		.loc 1 55 1 view .LVU60
+ 222 000e 08BD     		pop	{r3, pc}
+ 223              	.L10:
+ 224              		.align	2
+ 225              	.L9:
+ 226 0010 00100140 		.word	1073811456
+ 227              		.cfi_endproc
+ 228              	.LFE68:
+ 230              		.section	.text.drive_set_vel,"ax",%progbits
+ 231              		.align	1
+ 232              		.global	drive_set_vel
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 237              	drive_set_vel:
+ 238              	.LVL16:
+ 239              	.LFB69:
+ARM GAS  /tmp/ccbMhrbE.s 			page 6
 
 
- 227 0046 A368     		ldr	r3, [r4, #8]
- 228 0048 1B68     		ldr	r3, [r3]
- 229 004a 013D     		subs	r5, r5, #1
- 230 004c DD62     		str	r5, [r3, #44]
- 231              		.loc 1 66 9 view .LVU61
- 232 004e A388     		ldrh	r3, [r4, #4]
- 233 0050 A268     		ldr	r2, [r4, #8]
- 234 0052 013B     		subs	r3, r3, #1
- 235 0054 D360     		str	r3, [r2, #12]
- 236              		.loc 1 66 9 view .LVU62
-  67:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, D->speed >> 1); // /2
- 237              		.loc 1 67 9 view .LVU63
- 238 0056 E368     		ldr	r3, [r4, #12]
- 239 0058 C3B9     		cbnz	r3, .L11
- 240              		.loc 1 67 9 is_stmt 0 discriminator 1 view .LVU64
- 241 005a A388     		ldrh	r3, [r4, #4]
- 242 005c A268     		ldr	r2, [r4, #8]
- 243 005e 1268     		ldr	r2, [r2]
- 244 0060 5B08     		lsrs	r3, r3, #1
- 245 0062 5363     		str	r3, [r2, #52]
- 246              	.L12:
-  68:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
- 247              		.loc 1 68 9 is_stmt 1 view .LVU65
- 248 0064 E168     		ldr	r1, [r4, #12]
- 249 0066 A068     		ldr	r0, [r4, #8]
- 250 0068 FFF7FEFF 		bl	HAL_TIM_PWM_Start
- 251              	.LVL14:
-  69:BSP/Src/drive.c **** 
-  70:BSP/Src/drive.c ****         return true;
- 252              		.loc 1 70 9 view .LVU66
- 253              	.L6:
-  71:BSP/Src/drive.c ****     }
-  72:BSP/Src/drive.c **** }...
- 254              		.loc 1 72 1 is_stmt 0 view .LVU67
- 255 006c 3046     		mov	r0, r6
- 256 006e 70BD     		pop	{r4, r5, r6, pc}
- 257              	.LVL15:
- 258              	.L16:
-  50:BSP/Src/drive.c ****             HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
- 259              		.loc 1 50 13 is_stmt 1 view .LVU68
- 260 0070 C168     		ldr	r1, [r0, #12]
- 261              	.LVL16:
-  50:BSP/Src/drive.c ****             HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
- 262              		.loc 1 50 13 is_stmt 0 view .LVU69
- 263 0072 8068     		ldr	r0, [r0, #8]
- 264              	.LVL17:
-  50:BSP/Src/drive.c ****             HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
- 265              		.loc 1 50 13 view .LVU70
- 266 0074 FFF7FEFF 		bl	HAL_TIM_PWM_Stop
- 267              	.LVL18:
-  51:BSP/Src/drive.c ****             return;
- 268              		.loc 1 51 13 is_stmt 1 view .LVU71
- 269 0078 F8E7     		b	.L6
- 270              	.LVL19:
- 271              	.L17:
-  55:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
- 272              		.loc 1 55 13 view .LVU72
-ARM GAS  /tmp/ccIDVogH.s 			page 7
+  56:BSP/Src/drive.c **** 
+  57:BSP/Src/drive.c **** bool drive_set_vel(struct drive *D, int32_t vel)
+  58:BSP/Src/drive.c **** {
+ 240              		.loc 1 58 1 is_stmt 1 view -0
+ 241              		.cfi_startproc
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244              		.loc 1 58 1 is_stmt 0 view .LVU62
+ 245 0000 70B5     		push	{r4, r5, r6, lr}
+ 246              	.LCFI5:
+ 247              		.cfi_def_cfa_offset 16
+ 248              		.cfi_offset 4, -16
+ 249              		.cfi_offset 5, -12
+ 250              		.cfi_offset 6, -8
+ 251              		.cfi_offset 14, -4
+  59:BSP/Src/drive.c ****     if (D->enable == false)
+ 252              		.loc 1 59 5 is_stmt 1 view .LVU63
+ 253              		.loc 1 59 10 is_stmt 0 view .LVU64
+ 254 0002 0678     		ldrb	r6, [r0]	@ zero_extendqisi2
+ 255              		.loc 1 59 8 view .LVU65
+ 256 0004 002E     		cmp	r6, #0
+ 257 0006 32D0     		beq	.L11
+ 258 0008 0446     		mov	r4, r0
+ 259 000a 0D46     		mov	r5, r1
+  60:BSP/Src/drive.c ****     {
+  61:BSP/Src/drive.c ****         return false;
+  62:BSP/Src/drive.c ****     }
+  63:BSP/Src/drive.c ****     else
+  64:BSP/Src/drive.c ****     {
+  65:BSP/Src/drive.c ****         if ((vel < 150) && (vel > -150))
+ 260              		.loc 1 65 9 is_stmt 1 view .LVU66
+ 261              		.loc 1 65 25 is_stmt 0 view .LVU67
+ 262 000c 01F19503 		add	r3, r1, #149
+ 263              		.loc 1 65 12 view .LVU68
+ 264 0010 B3F5957F 		cmp	r3, #298
+ 265 0014 2DD9     		bls	.L21
+  66:BSP/Src/drive.c ****         {
+  67:BSP/Src/drive.c ****             HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
+  68:BSP/Src/drive.c ****             HAL_TIM_Base_Stop_IT(D->tim);
+  69:BSP/Src/drive.c ****             return;
+  70:BSP/Src/drive.c ****         }
+  71:BSP/Src/drive.c ****         if (vel < 0)
+ 266              		.loc 1 71 9 is_stmt 1 view .LVU69
+ 267              		.loc 1 71 12 is_stmt 0 view .LVU70
+ 268 0016 0029     		cmp	r1, #0
+ 269 0018 33DB     		blt	.L22
+  72:BSP/Src/drive.c ****         {
+  73:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
+  74:BSP/Src/drive.c ****             D->direction = backward;
+  75:BSP/Src/drive.c ****             vel = vel * (-1);
+  76:BSP/Src/drive.c ****         }
+  77:BSP/Src/drive.c ****         else
+  78:BSP/Src/drive.c ****         {
+  79:BSP/Src/drive.c ****             D->direction = forward;
+ 270              		.loc 1 79 13 is_stmt 1 view .LVU71
+ 271              		.loc 1 79 26 is_stmt 0 view .LVU72
+ 272 001a 0022     		movs	r2, #0
+ARM GAS  /tmp/ccbMhrbE.s 			page 7
 
 
- 273 007a 0122     		movs	r2, #1
- 274 007c 818B     		ldrh	r1, [r0, #28]
- 275              	.LVL20:
-  55:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
- 276              		.loc 1 55 13 is_stmt 0 view .LVU73
- 277 007e 8069     		ldr	r0, [r0, #24]
- 278              	.LVL21:
-  55:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
- 279              		.loc 1 55 13 view .LVU74
- 280 0080 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 281              	.LVL22:
-  56:BSP/Src/drive.c ****             D->direction = backward;
- 282              		.loc 1 56 13 is_stmt 1 view .LVU75
-  56:BSP/Src/drive.c ****             D->direction = backward;
- 283              		.loc 1 56 26 is_stmt 0 view .LVU76
- 284 0084 0123     		movs	r3, #1
- 285 0086 A370     		strb	r3, [r4, #2]
-  57:BSP/Src/drive.c ****             vel = vel * (-1);
- 286              		.loc 1 57 13 is_stmt 1 view .LVU77
-  57:BSP/Src/drive.c ****             vel = vel * (-1);
- 287              		.loc 1 57 17 is_stmt 0 view .LVU78
- 288 0088 6D42     		rsbs	r5, r5, #0
- 289              	.LVL23:
-  57:BSP/Src/drive.c ****             vel = vel * (-1);
- 290              		.loc 1 57 17 view .LVU79
- 291 008a CCE7     		b	.L10
- 292              	.LVL24:
- 293              	.L11:
-  67:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, D->speed >> 1); // /2
- 294              		.loc 1 67 9 discriminator 2 view .LVU80
- 295 008c 042B     		cmp	r3, #4
- 296 008e 07D0     		beq	.L18
-  67:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, D->speed >> 1); // /2
- 297              		.loc 1 67 9 discriminator 4 view .LVU81
- 298 0090 082B     		cmp	r3, #8
- 299 0092 0BD0     		beq	.L19
-  67:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, D->speed >> 1); // /2
- 300              		.loc 1 67 9 discriminator 7 view .LVU82
- 301 0094 A388     		ldrh	r3, [r4, #4]
- 302 0096 A268     		ldr	r2, [r4, #8]
- 303 0098 1268     		ldr	r2, [r2]
- 304 009a 5B08     		lsrs	r3, r3, #1
- 305 009c 1364     		str	r3, [r2, #64]
- 306 009e E1E7     		b	.L12
- 307              	.L18:
-  67:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, D->speed >> 1); // /2
- 308              		.loc 1 67 9 discriminator 3 view .LVU83
- 309 00a0 A388     		ldrh	r3, [r4, #4]
- 310 00a2 A268     		ldr	r2, [r4, #8]
- 311 00a4 1268     		ldr	r2, [r2]
- 312 00a6 5B08     		lsrs	r3, r3, #1
- 313 00a8 9363     		str	r3, [r2, #56]
- 314 00aa DBE7     		b	.L12
- 315              	.L19:
-  67:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, D->speed >> 1); // /2
- 316              		.loc 1 67 9 discriminator 6 view .LVU84
- 317 00ac A388     		ldrh	r3, [r4, #4]
-ARM GAS  /tmp/ccIDVogH.s 			page 8
+ 273 001c 8270     		strb	r2, [r0, #2]
+  80:BSP/Src/drive.c ****             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_ON);
+ 274              		.loc 1 80 13 is_stmt 1 view .LVU73
+ 275 001e 018E     		ldrh	r1, [r0, #48]
+ 276              	.LVL17:
+ 277              		.loc 1 80 13 is_stmt 0 view .LVU74
+ 278 0020 C06A     		ldr	r0, [r0, #44]
+ 279              	.LVL18:
+ 280              		.loc 1 80 13 view .LVU75
+ 281 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 282              	.LVL19:
+ 283              	.L15:
+  81:BSP/Src/drive.c ****         }
+  82:BSP/Src/drive.c **** 
+  83:BSP/Src/drive.c ****         D->target_speed = vel;
+ 284              		.loc 1 83 9 is_stmt 1 view .LVU76
+ 285              		.loc 1 83 25 is_stmt 0 view .LVU77
+ 286 0026 6560     		str	r5, [r4, #4]
+  84:BSP/Src/drive.c ****         D->target_step_time = 48000000 /*MHz*/ / (((vel)*D->PPR) / 60 /*RPM*/);
+ 287              		.loc 1 84 9 is_stmt 1 view .LVU78
+ 288              		.loc 1 84 59 is_stmt 0 view .LVU79
+ 289 0028 616B     		ldr	r1, [r4, #52]
+ 290              		.loc 1 84 57 view .LVU80
+ 291 002a 01FB05F5 		mul	r5, r1, r5
+ 292              	.LVL20:
+ 293              		.loc 1 84 66 view .LVU81
+ 294 002e 2649     		ldr	r1, .L25
+ 295 0030 A1FB0535 		umull	r3, r5, r1, r5
+ 296 0034 6D09     		lsrs	r5, r5, #5
+ 297              		.loc 1 84 48 view .LVU82
+ 298 0036 254B     		ldr	r3, .L25+4
+ 299 0038 B3FBF5F5 		udiv	r5, r3, r5
+ 300              		.loc 1 84 29 view .LVU83
+ 301 003c E560     		str	r5, [r4, #12]
+  85:BSP/Src/drive.c ****         __HAL_TIM_SetAutoreload(D->tim, D->current_step_time - 1);
+ 302              		.loc 1 85 9 is_stmt 1 view .LVU84
+ 303              		.loc 1 85 9 view .LVU85
+ 304 003e 2369     		ldr	r3, [r4, #16]
+ 305 0040 E269     		ldr	r2, [r4, #28]
+ 306 0042 1268     		ldr	r2, [r2]
+ 307 0044 013B     		subs	r3, r3, #1
+ 308 0046 D362     		str	r3, [r2, #44]
+ 309              	.LVL21:
+ 310              		.loc 1 85 9 view .LVU86
+ 311 0048 2369     		ldr	r3, [r4, #16]
+ 312 004a E269     		ldr	r2, [r4, #28]
+ 313 004c 013B     		subs	r3, r3, #1
+ 314 004e D360     		str	r3, [r2, #12]
+ 315              		.loc 1 85 9 view .LVU87
+  86:BSP/Src/drive.c ****         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 316              		.loc 1 86 9 view .LVU88
+ 317 0050 236A     		ldr	r3, [r4, #32]
+ 318 0052 FBB9     		cbnz	r3, .L16
+ 319              		.loc 1 86 9 is_stmt 0 discriminator 1 view .LVU89
+ 320 0054 2369     		ldr	r3, [r4, #16]
+ 321 0056 5B10     		asrs	r3, r3, #1
+ 322 0058 E269     		ldr	r2, [r4, #28]
+ARM GAS  /tmp/ccbMhrbE.s 			page 8
 
 
- 318 00ae A268     		ldr	r2, [r4, #8]
- 319 00b0 1268     		ldr	r2, [r2]
- 320 00b2 5B08     		lsrs	r3, r3, #1
- 321 00b4 D363     		str	r3, [r2, #60]
- 322 00b6 D5E7     		b	.L12
- 323              	.L21:
- 324              		.align	2
- 325              	.L20:
- 326 00b8 89888888 		.word	-2004318071
- 327 00bc 006CDC02 		.word	48000000
- 328              		.cfi_endproc
- 329              	.LFE68:
- 331              		.text
- 332              	.Letext0:
- 333              		.file 2 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_defau
- 334              		.file 3 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 335              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 336              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
- 337              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 338              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 339              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
- 340              		.file 9 "BSP/Inc/drive.h"
- 341              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
-ARM GAS  /tmp/ccIDVogH.s 			page 9
+ 323 005a 1268     		ldr	r2, [r2]
+ 324 005c 013B     		subs	r3, r3, #1
+ 325 005e 5363     		str	r3, [r2, #52]
+ 326              	.L17:
+  87:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
+ 327              		.loc 1 87 9 is_stmt 1 view .LVU90
+ 328 0060 216A     		ldr	r1, [r4, #32]
+ 329 0062 E069     		ldr	r0, [r4, #28]
+ 330 0064 FFF7FEFF 		bl	HAL_TIM_PWM_Start
+ 331              	.LVL22:
+  88:BSP/Src/drive.c ****         HAL_TIM_Base_Start_IT(D->tim);
+ 332              		.loc 1 88 9 view .LVU91
+ 333 0068 E069     		ldr	r0, [r4, #28]
+ 334 006a FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
+ 335              	.LVL23:
+  89:BSP/Src/drive.c **** 
+  90:BSP/Src/drive.c ****         return true;
+ 336              		.loc 1 90 9 view .LVU92
+ 337              	.L11:
+  91:BSP/Src/drive.c ****     }
+  92:BSP/Src/drive.c **** }
+ 338              		.loc 1 92 1 is_stmt 0 view .LVU93
+ 339 006e 3046     		mov	r0, r6
+ 340 0070 70BD     		pop	{r4, r5, r6, pc}
+ 341              	.LVL24:
+ 342              	.L21:
+  67:BSP/Src/drive.c ****             HAL_TIM_Base_Stop_IT(D->tim);
+ 343              		.loc 1 67 13 is_stmt 1 view .LVU94
+ 344 0072 016A     		ldr	r1, [r0, #32]
+ 345              	.LVL25:
+  67:BSP/Src/drive.c ****             HAL_TIM_Base_Stop_IT(D->tim);
+ 346              		.loc 1 67 13 is_stmt 0 view .LVU95
+ 347 0074 C069     		ldr	r0, [r0, #28]
+ 348              	.LVL26:
+  67:BSP/Src/drive.c ****             HAL_TIM_Base_Stop_IT(D->tim);
+ 349              		.loc 1 67 13 view .LVU96
+ 350 0076 FFF7FEFF 		bl	HAL_TIM_PWM_Stop
+ 351              	.LVL27:
+  68:BSP/Src/drive.c ****             return;
+ 352              		.loc 1 68 13 is_stmt 1 view .LVU97
+ 353 007a E069     		ldr	r0, [r4, #28]
+ 354 007c FFF7FEFF 		bl	HAL_TIM_Base_Stop_IT
+ 355              	.LVL28:
+  69:BSP/Src/drive.c ****         }
+ 356              		.loc 1 69 13 view .LVU98
+ 357 0080 F5E7     		b	.L11
+ 358              	.LVL29:
+ 359              	.L22:
+  73:BSP/Src/drive.c ****             D->direction = backward;
+ 360              		.loc 1 73 13 view .LVU99
+ 361 0082 0122     		movs	r2, #1
+ 362 0084 018E     		ldrh	r1, [r0, #48]
+ 363              	.LVL30:
+  73:BSP/Src/drive.c ****             D->direction = backward;
+ 364              		.loc 1 73 13 is_stmt 0 view .LVU100
+ 365 0086 C06A     		ldr	r0, [r0, #44]
+ 366              	.LVL31:
+ARM GAS  /tmp/ccbMhrbE.s 			page 9
+
+
+  73:BSP/Src/drive.c ****             D->direction = backward;
+ 367              		.loc 1 73 13 view .LVU101
+ 368 0088 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 369              	.LVL32:
+  74:BSP/Src/drive.c ****             vel = vel * (-1);
+ 370              		.loc 1 74 13 is_stmt 1 view .LVU102
+  74:BSP/Src/drive.c ****             vel = vel * (-1);
+ 371              		.loc 1 74 26 is_stmt 0 view .LVU103
+ 372 008c 0123     		movs	r3, #1
+ 373 008e A370     		strb	r3, [r4, #2]
+  75:BSP/Src/drive.c ****         }
+ 374              		.loc 1 75 13 is_stmt 1 view .LVU104
+  75:BSP/Src/drive.c ****         }
+ 375              		.loc 1 75 17 is_stmt 0 view .LVU105
+ 376 0090 6D42     		rsbs	r5, r5, #0
+ 377              	.LVL33:
+  75:BSP/Src/drive.c ****         }
+ 378              		.loc 1 75 17 view .LVU106
+ 379 0092 C8E7     		b	.L15
+ 380              	.LVL34:
+ 381              	.L16:
+  86:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
+ 382              		.loc 1 86 9 discriminator 2 view .LVU107
+ 383 0094 042B     		cmp	r3, #4
+ 384 0096 08D0     		beq	.L23
+  86:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
+ 385              		.loc 1 86 9 discriminator 4 view .LVU108
+ 386 0098 082B     		cmp	r3, #8
+ 387 009a 0DD0     		beq	.L24
+  86:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
+ 388              		.loc 1 86 9 discriminator 7 view .LVU109
+ 389 009c 2369     		ldr	r3, [r4, #16]
+ 390 009e 5B10     		asrs	r3, r3, #1
+ 391 00a0 E269     		ldr	r2, [r4, #28]
+ 392 00a2 1268     		ldr	r2, [r2]
+ 393 00a4 013B     		subs	r3, r3, #1
+ 394 00a6 1364     		str	r3, [r2, #64]
+ 395 00a8 DAE7     		b	.L17
+ 396              	.L23:
+  86:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
+ 397              		.loc 1 86 9 discriminator 3 view .LVU110
+ 398 00aa 2369     		ldr	r3, [r4, #16]
+ 399 00ac 5B10     		asrs	r3, r3, #1
+ 400 00ae E269     		ldr	r2, [r4, #28]
+ 401 00b0 1268     		ldr	r2, [r2]
+ 402 00b2 013B     		subs	r3, r3, #1
+ 403 00b4 9363     		str	r3, [r2, #56]
+ 404 00b6 D3E7     		b	.L17
+ 405              	.L24:
+  86:BSP/Src/drive.c ****         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
+ 406              		.loc 1 86 9 discriminator 6 view .LVU111
+ 407 00b8 2369     		ldr	r3, [r4, #16]
+ 408 00ba 5B10     		asrs	r3, r3, #1
+ 409 00bc E269     		ldr	r2, [r4, #28]
+ 410 00be 1268     		ldr	r2, [r2]
+ 411 00c0 013B     		subs	r3, r3, #1
+ 412 00c2 D363     		str	r3, [r2, #60]
+ARM GAS  /tmp/ccbMhrbE.s 			page 10
+
+
+ 413 00c4 CCE7     		b	.L17
+ 414              	.L26:
+ 415 00c6 00BF     		.align	2
+ 416              	.L25:
+ 417 00c8 89888888 		.word	-2004318071
+ 418 00cc 006CDC02 		.word	48000000
+ 419              		.cfi_endproc
+ 420              	.LFE69:
+ 422              		.section	.text.drive_increese_speed,"ax",%progbits
+ 423              		.align	1
+ 424              		.global	drive_increese_speed
+ 425              		.syntax unified
+ 426              		.thumb
+ 427              		.thumb_func
+ 429              	drive_increese_speed:
+ 430              	.LVL35:
+ 431              	.LFB70:
+  93:BSP/Src/drive.c **** 
+  94:BSP/Src/drive.c **** void drive_increese_speed(struct drive *D)
+  95:BSP/Src/drive.c **** {
+ 432              		.loc 1 95 1 is_stmt 1 view -0
+ 433              		.cfi_startproc
+ 434              		@ args = 0, pretend = 0, frame = 0
+ 435              		@ frame_needed = 0, uses_anonymous_args = 0
+ 436              		@ link register save eliminated.
+  96:BSP/Src/drive.c ****     if (D->target_step_time > D->current_step_time)
+ 437              		.loc 1 96 5 view .LVU113
+ 438              		.loc 1 96 10 is_stmt 0 view .LVU114
+ 439 0000 C368     		ldr	r3, [r0, #12]
+ 440              		.loc 1 96 32 view .LVU115
+ 441 0002 0269     		ldr	r2, [r0, #16]
+ 442              		.loc 1 96 8 view .LVU116
+ 443 0004 9342     		cmp	r3, r2
+ 444 0006 37DD     		ble	.L28
+  97:BSP/Src/drive.c ****     {
+  98:BSP/Src/drive.c ****         if (D->target_step_time - D->current_step_time > D->axeleration_step)
+ 445              		.loc 1 98 9 is_stmt 1 view .LVU117
+ 446              		.loc 1 98 33 is_stmt 0 view .LVU118
+ 447 0008 9B1A     		subs	r3, r3, r2
+ 448              		.loc 1 98 59 view .LVU119
+ 449 000a 4169     		ldr	r1, [r0, #20]
+ 450              		.loc 1 98 12 view .LVU120
+ 451 000c 8B42     		cmp	r3, r1
+ 452 000e 11D9     		bls	.L29
+  99:BSP/Src/drive.c ****         {
+ 100:BSP/Src/drive.c ****             D->current_step_time = D->current_step_time + D->axeleration_step;
+ 453              		.loc 1 100 13 is_stmt 1 view .LVU121
+ 454              		.loc 1 100 57 is_stmt 0 view .LVU122
+ 455 0010 0A44     		add	r2, r2, r1
+ 456              		.loc 1 100 34 view .LVU123
+ 457 0012 0261     		str	r2, [r0, #16]
+ 101:BSP/Src/drive.c ****             __HAL_TIM_SetAutoreload(D->tim, D->current_step_time - 1);
+ 458              		.loc 1 101 13 is_stmt 1 view .LVU124
+ 459              		.loc 1 101 13 view .LVU125
+ 460 0014 C369     		ldr	r3, [r0, #28]
+ 461 0016 1B68     		ldr	r3, [r3]
+ 462 0018 013A     		subs	r2, r2, #1
+ARM GAS  /tmp/ccbMhrbE.s 			page 11
+
+
+ 463 001a DA62     		str	r2, [r3, #44]
+ 464              		.loc 1 101 13 view .LVU126
+ 465 001c 0369     		ldr	r3, [r0, #16]
+ 466 001e C269     		ldr	r2, [r0, #28]
+ 467 0020 013B     		subs	r3, r3, #1
+ 468 0022 D360     		str	r3, [r2, #12]
+ 469              		.loc 1 101 13 view .LVU127
+ 102:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 470              		.loc 1 102 13 view .LVU128
+ 471 0024 036A     		ldr	r3, [r0, #32]
+ 472 0026 73B9     		cbnz	r3, .L30
+ 473              		.loc 1 102 13 is_stmt 0 discriminator 1 view .LVU129
+ 474 0028 0369     		ldr	r3, [r0, #16]
+ 475 002a 5B10     		asrs	r3, r3, #1
+ 476 002c C269     		ldr	r2, [r0, #28]
+ 477 002e 1268     		ldr	r2, [r2]
+ 478 0030 013B     		subs	r3, r3, #1
+ 479 0032 5363     		str	r3, [r2, #52]
+ 480              	.L29:
+ 103:BSP/Src/drive.c ****         }
+ 104:BSP/Src/drive.c ****         D->current_speed = (48000000 * 60) / (D->current_step_time * D->PPR);
+ 481              		.loc 1 104 9 is_stmt 1 view .LVU130
+ 482              		.loc 1 104 48 is_stmt 0 view .LVU131
+ 483 0034 0369     		ldr	r3, [r0, #16]
+ 484              		.loc 1 104 71 view .LVU132
+ 485 0036 426B     		ldr	r2, [r0, #52]
+ 486              		.loc 1 104 68 view .LVU133
+ 487 0038 03FB02F2 		mul	r2, r3, r2
+ 488              		.loc 1 104 44 view .LVU134
+ 489 003c 2B4B     		ldr	r3, .L42
+ 490 003e B3FBF2F3 		udiv	r3, r3, r2
+ 491              		.loc 1 104 26 view .LVU135
+ 492 0042 8360     		str	r3, [r0, #8]
+ 493 0044 7047     		bx	lr
+ 494              	.L30:
+ 102:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 495              		.loc 1 102 13 discriminator 2 view .LVU136
+ 496 0046 042B     		cmp	r3, #4
+ 497 0048 08D0     		beq	.L38
+ 102:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 498              		.loc 1 102 13 discriminator 4 view .LVU137
+ 499 004a 082B     		cmp	r3, #8
+ 500 004c 0DD0     		beq	.L39
+ 102:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 501              		.loc 1 102 13 discriminator 7 view .LVU138
+ 502 004e 0369     		ldr	r3, [r0, #16]
+ 503 0050 5B10     		asrs	r3, r3, #1
+ 504 0052 C269     		ldr	r2, [r0, #28]
+ 505 0054 1268     		ldr	r2, [r2]
+ 506 0056 013B     		subs	r3, r3, #1
+ 507 0058 1364     		str	r3, [r2, #64]
+ 508 005a EBE7     		b	.L29
+ 509              	.L38:
+ 102:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 510              		.loc 1 102 13 discriminator 3 view .LVU139
+ 511 005c 0369     		ldr	r3, [r0, #16]
+ 512 005e 5B10     		asrs	r3, r3, #1
+ARM GAS  /tmp/ccbMhrbE.s 			page 12
+
+
+ 513 0060 C269     		ldr	r2, [r0, #28]
+ 514 0062 1268     		ldr	r2, [r2]
+ 515 0064 013B     		subs	r3, r3, #1
+ 516 0066 9363     		str	r3, [r2, #56]
+ 517 0068 E4E7     		b	.L29
+ 518              	.L39:
+ 102:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 519              		.loc 1 102 13 discriminator 6 view .LVU140
+ 520 006a 0369     		ldr	r3, [r0, #16]
+ 521 006c 5B10     		asrs	r3, r3, #1
+ 522 006e C269     		ldr	r2, [r0, #28]
+ 523 0070 1268     		ldr	r2, [r2]
+ 524 0072 013B     		subs	r3, r3, #1
+ 525 0074 D363     		str	r3, [r2, #60]
+ 526 0076 DDE7     		b	.L29
+ 527              	.L28:
+ 105:BSP/Src/drive.c ****     }
+ 106:BSP/Src/drive.c ****     else if (D->target_step_time < D->current_step_time)
+ 528              		.loc 1 106 10 is_stmt 1 view .LVU141
+ 529              		.loc 1 106 13 is_stmt 0 view .LVU142
+ 530 0078 9342     		cmp	r3, r2
+ 531 007a 1DDA     		bge	.L27
+ 107:BSP/Src/drive.c ****     {
+ 108:BSP/Src/drive.c ****         if (D->current_step_time - D->target_step_time > D->axeleration_step)
+ 532              		.loc 1 108 9 is_stmt 1 view .LVU143
+ 533              		.loc 1 108 34 is_stmt 0 view .LVU144
+ 534 007c D31A     		subs	r3, r2, r3
+ 535              		.loc 1 108 59 view .LVU145
+ 536 007e 4169     		ldr	r1, [r0, #20]
+ 537              		.loc 1 108 12 view .LVU146
+ 538 0080 8B42     		cmp	r3, r1
+ 539 0082 11D9     		bls	.L34
+ 109:BSP/Src/drive.c ****         {
+ 110:BSP/Src/drive.c ****             D->current_step_time = D->current_step_time - D->axeleration_step;
+ 540              		.loc 1 110 13 is_stmt 1 view .LVU147
+ 541              		.loc 1 110 57 is_stmt 0 view .LVU148
+ 542 0084 521A     		subs	r2, r2, r1
+ 543              		.loc 1 110 34 view .LVU149
+ 544 0086 0261     		str	r2, [r0, #16]
+ 111:BSP/Src/drive.c ****             __HAL_TIM_SetAutoreload(D->tim, D->current_step_time - 1);
+ 545              		.loc 1 111 13 is_stmt 1 view .LVU150
+ 546              		.loc 1 111 13 view .LVU151
+ 547 0088 C369     		ldr	r3, [r0, #28]
+ 548 008a 1B68     		ldr	r3, [r3]
+ 549 008c 013A     		subs	r2, r2, #1
+ 550 008e DA62     		str	r2, [r3, #44]
+ 551              		.loc 1 111 13 view .LVU152
+ 552 0090 0369     		ldr	r3, [r0, #16]
+ 553 0092 C269     		ldr	r2, [r0, #28]
+ 554 0094 013B     		subs	r3, r3, #1
+ 555 0096 D360     		str	r3, [r2, #12]
+ 556              		.loc 1 111 13 view .LVU153
+ 112:BSP/Src/drive.c ****             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 557              		.loc 1 112 13 view .LVU154
+ 558 0098 036A     		ldr	r3, [r0, #32]
+ 559 009a 73B9     		cbnz	r3, .L35
+ 560              		.loc 1 112 13 is_stmt 0 discriminator 1 view .LVU155
+ARM GAS  /tmp/ccbMhrbE.s 			page 13
+
+
+ 561 009c 0369     		ldr	r3, [r0, #16]
+ 562 009e 5B10     		asrs	r3, r3, #1
+ 563 00a0 C269     		ldr	r2, [r0, #28]
+ 564 00a2 1268     		ldr	r2, [r2]
+ 565 00a4 013B     		subs	r3, r3, #1
+ 566 00a6 5363     		str	r3, [r2, #52]
+ 567              	.L34:
+ 113:BSP/Src/drive.c ****         }
+ 114:BSP/Src/drive.c ****         D->current_speed = (48000000 * 60) / (D->current_step_time * D->PPR);
+ 568              		.loc 1 114 9 is_stmt 1 view .LVU156
+ 569              		.loc 1 114 48 is_stmt 0 view .LVU157
+ 570 00a8 0369     		ldr	r3, [r0, #16]
+ 571              		.loc 1 114 71 view .LVU158
+ 572 00aa 426B     		ldr	r2, [r0, #52]
+ 573              		.loc 1 114 68 view .LVU159
+ 574 00ac 03FB02F2 		mul	r2, r3, r2
+ 575              		.loc 1 114 44 view .LVU160
+ 576 00b0 0E4B     		ldr	r3, .L42
+ 577 00b2 B3FBF2F3 		udiv	r3, r3, r2
+ 578              		.loc 1 114 26 view .LVU161
+ 579 00b6 8360     		str	r3, [r0, #8]
+ 580              	.L27:
+ 115:BSP/Src/drive.c ****     }
+ 116:BSP/Src/drive.c **** }
+ 581              		.loc 1 116 1 view .LVU162
+ 582 00b8 7047     		bx	lr
+ 583              	.L35:
+ 112:BSP/Src/drive.c ****         }
+ 584              		.loc 1 112 13 discriminator 2 view .LVU163
+ 585 00ba 042B     		cmp	r3, #4
+ 586 00bc 08D0     		beq	.L40
+ 112:BSP/Src/drive.c ****         }
+ 587              		.loc 1 112 13 discriminator 4 view .LVU164
+ 588 00be 082B     		cmp	r3, #8
+ 589 00c0 0DD0     		beq	.L41
+ 112:BSP/Src/drive.c ****         }
+ 590              		.loc 1 112 13 discriminator 7 view .LVU165
+ 591 00c2 0369     		ldr	r3, [r0, #16]
+ 592 00c4 5B10     		asrs	r3, r3, #1
+ 593 00c6 C269     		ldr	r2, [r0, #28]
+ 594 00c8 1268     		ldr	r2, [r2]
+ 595 00ca 013B     		subs	r3, r3, #1
+ 596 00cc 1364     		str	r3, [r2, #64]
+ 597 00ce EBE7     		b	.L34
+ 598              	.L40:
+ 112:BSP/Src/drive.c ****         }
+ 599              		.loc 1 112 13 discriminator 3 view .LVU166
+ 600 00d0 0369     		ldr	r3, [r0, #16]
+ 601 00d2 5B10     		asrs	r3, r3, #1
+ 602 00d4 C269     		ldr	r2, [r0, #28]
+ 603 00d6 1268     		ldr	r2, [r2]
+ 604 00d8 013B     		subs	r3, r3, #1
+ 605 00da 9363     		str	r3, [r2, #56]
+ 606 00dc E4E7     		b	.L34
+ 607              	.L41:
+ 112:BSP/Src/drive.c ****         }
+ 608              		.loc 1 112 13 discriminator 6 view .LVU167
+ARM GAS  /tmp/ccbMhrbE.s 			page 14
+
+
+ 609 00de 0369     		ldr	r3, [r0, #16]
+ 610 00e0 5B10     		asrs	r3, r3, #1
+ 611 00e2 C269     		ldr	r2, [r0, #28]
+ 612 00e4 1268     		ldr	r2, [r2]
+ 613 00e6 013B     		subs	r3, r3, #1
+ 614 00e8 D363     		str	r3, [r2, #60]
+ 615 00ea DDE7     		b	.L34
+ 616              	.L43:
+ 617              		.align	2
+ 618              	.L42:
+ 619 00ec 0050A9AB 		.word	-1414967296
+ 620              		.cfi_endproc
+ 621              	.LFE70:
+ 623              		.section	.text.driveElapsedCallback,"ax",%progbits
+ 624              		.align	1
+ 625              		.global	driveElapsedCallback
+ 626              		.syntax unified
+ 627              		.thumb
+ 628              		.thumb_func
+ 630              	driveElapsedCallback:
+ 631              	.LVL36:
+ 632              	.LFB71:
+ 117:BSP/Src/drive.c **** 
+ 118:BSP/Src/drive.c **** void driveElapsedCallback(struct drive *D)
+ 119:BSP/Src/drive.c **** {
+ 633              		.loc 1 119 1 is_stmt 1 view -0
+ 634              		.cfi_startproc
+ 635              		@ args = 0, pretend = 0, frame = 0
+ 636              		@ frame_needed = 0, uses_anonymous_args = 0
+ 637              		@ link register save eliminated.
+ 120:BSP/Src/drive.c **** 
+ 121:BSP/Src/drive.c ****     //
+ 122:BSP/Src/drive.c ****     // int32_t delta = D->current_step_time - D->target_step_time;
+ 123:BSP/Src/drive.c ****     // if (delta == 0)
+ 124:BSP/Src/drive.c ****     //    HAL_TIM_Base_Stop_IT(D->tim);
+ 125:BSP/Src/drive.c ****     // if (delta > 0)
+ 126:BSP/Src/drive.c ****     //    D->current_step_time = D->current_step_time - D->axeleration_step;
+ 127:BSP/Src/drive.c ****     //    // D->current_step_time = (D->current_step_time * 90) / 100;
+ 128:BSP/Src/drive.c ****     // if (delta < 0)
+ 129:BSP/Src/drive.c ****     //    D->current_step_time = D->current_step_time + D->axeleration_step;
+ 130:BSP/Src/drive.c ****     //    // D->current_step_time = (D->current_step_time * 110) / 100;
+ 131:BSP/Src/drive.c ****     //
+ 132:BSP/Src/drive.c ****     //__HAL_TIM_SetAutoreload(D->tim, D->current_step_time - 1);
+ 133:BSP/Src/drive.c ****     //__HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+ 134:BSP/Src/drive.c **** }...
+ 638              		.loc 1 134 1 view .LVU169
+ 639 0000 7047     		bx	lr
+ 640              		.cfi_endproc
+ 641              	.LFE71:
+ 643              		.text
+ 644              	.Letext0:
+ 645              		.file 2 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_defau
+ 646              		.file 3 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 647              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 648              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 649              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 650              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ARM GAS  /tmp/ccbMhrbE.s 			page 15
+
+
+ 651              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 652              		.file 9 "BSP/Inc/drive.h"
+ 653              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ARM GAS  /tmp/ccbMhrbE.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 drive.c
-     /tmp/ccIDVogH.s:18     .text.drive_init:0000000000000000 $t
-     /tmp/ccIDVogH.s:24     .text.drive_init:0000000000000000 drive_init
-     /tmp/ccIDVogH.s:76     .text.drive_on:0000000000000000 $t
-     /tmp/ccIDVogH.s:82     .text.drive_on:0000000000000000 drive_on
-     /tmp/ccIDVogH.s:112    .text.drive_off:0000000000000000 $t
-     /tmp/ccIDVogH.s:118    .text.drive_off:0000000000000000 drive_off
-     /tmp/ccIDVogH.s:155    .text.drive_set_vel:0000000000000000 $t
-     /tmp/ccIDVogH.s:161    .text.drive_set_vel:0000000000000000 drive_set_vel
-     /tmp/ccIDVogH.s:326    .text.drive_set_vel:00000000000000b8 $d
+     /tmp/ccbMhrbE.s:18     .text.drive_init:0000000000000000 $t
+     /tmp/ccbMhrbE.s:24     .text.drive_init:0000000000000000 drive_init
+     /tmp/ccbMhrbE.s:107    .text.drive_on:0000000000000000 $t
+     /tmp/ccbMhrbE.s:113    .text.drive_on:0000000000000000 drive_on
+     /tmp/ccbMhrbE.s:143    .text.drive_off:0000000000000000 $t
+     /tmp/ccbMhrbE.s:149    .text.drive_off:0000000000000000 drive_off
+     /tmp/ccbMhrbE.s:190    .text.drive_set_axel:0000000000000000 $t
+     /tmp/ccbMhrbE.s:196    .text.drive_set_axel:0000000000000000 drive_set_axel
+     /tmp/ccbMhrbE.s:226    .text.drive_set_axel:0000000000000010 $d
+     /tmp/ccbMhrbE.s:231    .text.drive_set_vel:0000000000000000 $t
+     /tmp/ccbMhrbE.s:237    .text.drive_set_vel:0000000000000000 drive_set_vel
+     /tmp/ccbMhrbE.s:417    .text.drive_set_vel:00000000000000c8 $d
+     /tmp/ccbMhrbE.s:423    .text.drive_increese_speed:0000000000000000 $t
+     /tmp/ccbMhrbE.s:429    .text.drive_increese_speed:0000000000000000 drive_increese_speed
+     /tmp/ccbMhrbE.s:619    .text.drive_increese_speed:00000000000000ec $d
+     /tmp/ccbMhrbE.s:624    .text.driveElapsedCallback:0000000000000000 $t
+     /tmp/ccbMhrbE.s:630    .text.driveElapsedCallback:0000000000000000 driveElapsedCallback
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin
 HAL_TIM_PWM_Stop
+HAL_TIM_Base_Stop_IT
+HAL_GPIO_TogglePin
 HAL_TIM_PWM_Start
+HAL_TIM_Base_Start_IT
