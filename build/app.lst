@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cco9LWb0.s 			page 1
+ARM GAS  /tmp/cc3v6KQL.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,51 +58,52 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
   17:App/Src/app.c **** {
   34              		.loc 1 17 1 view -0
   35              		.cfi_startproc
-ARM GAS  /tmp/cco9LWb0.s 			page 2
+ARM GAS  /tmp/cc3v6KQL.s 			page 2
 
 
   36              		@ args = 0, pretend = 0, frame = 64
   37              		@ frame_needed = 0, uses_anonymous_args = 0
-  38 0000 30B5     		push	{r4, r5, lr}
+  38 0000 70B5     		push	{r4, r5, r6, lr}
   39              	.LCFI0:
-  40              		.cfi_def_cfa_offset 12
-  41              		.cfi_offset 4, -12
-  42              		.cfi_offset 5, -8
-  43              		.cfi_offset 14, -4
-  44 0002 97B0     		sub	sp, sp, #92
-  45              	.LCFI1:
-  46              		.cfi_def_cfa_offset 104
+  40              		.cfi_def_cfa_offset 16
+  41              		.cfi_offset 4, -16
+  42              		.cfi_offset 5, -12
+  43              		.cfi_offset 6, -8
+  44              		.cfi_offset 14, -4
+  45 0002 96B0     		sub	sp, sp, #88
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 104
   18:App/Src/app.c ****     uart_send_mes("Hardware is started...\n", 100);
-  47              		.loc 1 18 5 view .LVU1
-  48 0004 6421     		movs	r1, #100
-  49 0006 2148     		ldr	r0, .L4
-  50 0008 FFF7FEFF 		bl	uart_send_mes
-  51              	.LVL0:
+  48              		.loc 1 18 5 view .LVU1
+  49 0004 6421     		movs	r1, #100
+  50 0006 2048     		ldr	r0, .L4
+  51 0008 FFF7FEFF 		bl	uart_send_mes
+  52              	.LVL0:
   19:App/Src/app.c ****     uart_ask_str_IT(command);
-  52              		.loc 1 19 5 view .LVU2
-  53 000c 2048     		ldr	r0, .L4+4
-  54 000e FFF7FEFF 		bl	uart_ask_str_IT
-  55              	.LVL1:
+  53              		.loc 1 19 5 view .LVU2
+  54 000c 1F48     		ldr	r0, .L4+4
+  55 000e FFF7FEFF 		bl	uart_ask_str_IT
+  56              	.LVL1:
   20:App/Src/app.c **** 
   21:App/Src/app.c ****     drive_init(
-  56              		.loc 1 21 5 view .LVU3
-  57 0012 4FF4C855 		mov	r5, #6400
-  58 0016 0595     		str	r5, [sp, #20]
-  59 0018 0A23     		movs	r3, #10
-  60 001a 0493     		str	r3, [sp, #16]
-  61 001c 4FF48063 		mov	r3, #1024
-  62 0020 0393     		str	r3, [sp, #12]
-  63 0022 1C4C     		ldr	r4, .L4+8
-  64 0024 0294     		str	r4, [sp, #8]
-  65 0026 0223     		movs	r3, #2
-  66 0028 0193     		str	r3, [sp, #4]
-  67 002a 0094     		str	r4, [sp]
-  68 002c 0823     		movs	r3, #8
-  69 002e 1A4A     		ldr	r2, .L4+12
-  70 0030 0021     		movs	r1, #0
-  71 0032 1A48     		ldr	r0, .L4+16
-  72 0034 FFF7FEFF 		bl	drive_init
-  73              	.LVL2:
+  57              		.loc 1 21 5 view .LVU3
+  58 0012 4FF4C856 		mov	r6, #6400
+  59 0016 0596     		str	r6, [sp, #20]
+  60 0018 0125     		movs	r5, #1
+  61 001a 0495     		str	r5, [sp, #16]
+  62 001c 4FF48063 		mov	r3, #1024
+  63 0020 0393     		str	r3, [sp, #12]
+  64 0022 1B4C     		ldr	r4, .L4+8
+  65 0024 0294     		str	r4, [sp, #8]
+  66 0026 0223     		movs	r3, #2
+  67 0028 0193     		str	r3, [sp, #4]
+  68 002a 0094     		str	r4, [sp]
+  69 002c 0823     		movs	r3, #8
+  70 002e 194A     		ldr	r2, .L4+12
+  71 0030 0021     		movs	r1, #0
+  72 0032 1948     		ldr	r0, .L4+16
+  73 0034 FFF7FEFF 		bl	drive_init
+  74              	.LVL2:
   22:App/Src/app.c ****         &drv_l,
   23:App/Src/app.c ****         left,
   24:App/Src/app.c ****         &htim4,
@@ -111,29 +112,28 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
   27:App/Src/app.c ****         ENA_DRV_L_Pin,
   28:App/Src/app.c ****         DIR_DRV_L_GPIO_Port,
   29:App/Src/app.c ****         DIR_DRV_L_Pin,
-  30:App/Src/app.c ****         10,
+  30:App/Src/app.c ****         1,
   31:App/Src/app.c ****         6400);
   32:App/Src/app.c **** 
   33:App/Src/app.c ****     drive_init(
-  74              		.loc 1 33 5 view .LVU4
-  75 0038 0595     		str	r5, [sp, #20]
-  76 003a 0323     		movs	r3, #3
-ARM GAS  /tmp/cco9LWb0.s 			page 3
+  75              		.loc 1 33 5 view .LVU4
+  76 0038 0596     		str	r6, [sp, #20]
+ARM GAS  /tmp/cc3v6KQL.s 			page 3
 
 
-  77 003c 0493     		str	r3, [sp, #16]
-  78 003e 4FF40073 		mov	r3, #512
-  79 0042 0393     		str	r3, [sp, #12]
-  80 0044 0294     		str	r4, [sp, #8]
-  81 0046 4FF40063 		mov	r3, #2048
-  82 004a 0193     		str	r3, [sp, #4]
-  83 004c 144B     		ldr	r3, .L4+20
-  84 004e 0093     		str	r3, [sp]
-  85 0050 0423     		movs	r3, #4
-  86 0052 144A     		ldr	r2, .L4+24
-  87 0054 0021     		movs	r1, #0
-  88 0056 1448     		ldr	r0, .L4+28
-  89 0058 FFF7FEFF 		bl	drive_init
+  77 003a 0495     		str	r5, [sp, #16]
+  78 003c 4FF40073 		mov	r3, #512
+  79 0040 0393     		str	r3, [sp, #12]
+  80 0042 0294     		str	r4, [sp, #8]
+  81 0044 4FF40063 		mov	r3, #2048
+  82 0048 0193     		str	r3, [sp, #4]
+  83 004a 144B     		ldr	r3, .L4+20
+  84 004c 0093     		str	r3, [sp]
+  85 004e 0423     		movs	r3, #4
+  86 0050 134A     		ldr	r2, .L4+24
+  87 0052 0021     		movs	r1, #0
+  88 0054 1348     		ldr	r0, .L4+28
+  89 0056 FFF7FEFF 		bl	drive_init
   90              	.LVL3:
   34:App/Src/app.c ****         &drv_r,
   35:App/Src/app.c ****         left,
@@ -143,7 +143,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
   39:App/Src/app.c ****         ENA_DRV_R_Pin,
   40:App/Src/app.c ****         DIR_DRV_R_GPIO_Port,
   41:App/Src/app.c ****         DIR_DRV_R_Pin,
-  42:App/Src/app.c ****         3,
+  42:App/Src/app.c ****         1,
   43:App/Src/app.c ****         6400);
   44:App/Src/app.c **** 
   45:App/Src/app.c ****     int16_t i = 500;
@@ -152,8 +152,8 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
   92              		.loc 1 46 5 view .LVU6
   47:App/Src/app.c ****     HAL_TIM_Base_Start_IT(&htim2);
   93              		.loc 1 47 5 view .LVU7
-  94 005c 1348     		ldr	r0, .L4+32
-  95 005e FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
+  94 005a 1348     		ldr	r0, .L4+32
+  95 005c FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
   96              	.LVL4:
   97              	.L2:
   48:App/Src/app.c **** 
@@ -162,50 +162,50 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
   50:App/Src/app.c ****     {
   51:App/Src/app.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
   99              		.loc 1 51 9 discriminator 1 view .LVU9
- 100 0062 4FF40051 		mov	r1, #8192
- 101 0066 1248     		ldr	r0, .L4+36
- 102 0068 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 100 0060 4FF40051 		mov	r1, #8192
+ 101 0064 1148     		ldr	r0, .L4+36
+ 102 0066 FFF7FEFF 		bl	HAL_GPIO_TogglePin
  103              	.LVL5:
   52:App/Src/app.c ****         sprintf(buffer, "L %d\t\t\tR%d\n", drv_l.current_speed, drv_r.current_speed);
  104              		.loc 1 52 9 discriminator 1 view .LVU10
- 105 006c 0E4B     		ldr	r3, .L4+28
- 106 006e 9B68     		ldr	r3, [r3, #8]
- 107 0070 0A4A     		ldr	r2, .L4+16
- 108 0072 9268     		ldr	r2, [r2, #8]
- 109 0074 0F49     		ldr	r1, .L4+40
- 110 0076 06A8     		add	r0, sp, #24
- 111 0078 FFF7FEFF 		bl	sprintf
+ 105 006a 0E4B     		ldr	r3, .L4+28
+ 106 006c 9B68     		ldr	r3, [r3, #8]
+ 107 006e 0A4A     		ldr	r2, .L4+16
+ 108 0070 9268     		ldr	r2, [r2, #8]
+ 109 0072 0F49     		ldr	r1, .L4+40
+ 110 0074 06A8     		add	r0, sp, #24
+ 111 0076 FFF7FEFF 		bl	sprintf
  112              	.LVL6:
   53:App/Src/app.c ****         uart_send_mes_IT(buffer);
  113              		.loc 1 53 9 discriminator 1 view .LVU11
-ARM GAS  /tmp/cco9LWb0.s 			page 4
+ARM GAS  /tmp/cc3v6KQL.s 			page 4
 
 
- 114 007c 06A8     		add	r0, sp, #24
- 115 007e FFF7FEFF 		bl	uart_send_mes_IT
+ 114 007a 06A8     		add	r0, sp, #24
+ 115 007c FFF7FEFF 		bl	uart_send_mes_IT
  116              	.LVL7:
   54:App/Src/app.c ****         HAL_Delay(100);
  117              		.loc 1 54 9 discriminator 1 view .LVU12
- 118 0082 6420     		movs	r0, #100
- 119 0084 FFF7FEFF 		bl	HAL_Delay
+ 118 0080 6420     		movs	r0, #100
+ 119 0082 FFF7FEFF 		bl	HAL_Delay
  120              	.LVL8:
   49:App/Src/app.c ****     {
  121              		.loc 1 49 11 discriminator 1 view .LVU13
- 122 0088 EBE7     		b	.L2
+ 122 0086 EBE7     		b	.L2
  123              	.L5:
- 124 008a 00BF     		.align	2
+ 124              		.align	2
  125              	.L4:
- 126 008c 00000000 		.word	.LC0
- 127 0090 00000000 		.word	.LANCHOR0
- 128 0094 00080140 		.word	1073809408
- 129 0098 00000000 		.word	htim4
- 130 009c 00000000 		.word	.LANCHOR1
- 131 00a0 000C0140 		.word	1073810432
- 132 00a4 00000000 		.word	htim3
- 133 00a8 00000000 		.word	.LANCHOR2
- 134 00ac 00000000 		.word	htim2
- 135 00b0 00100140 		.word	1073811456
- 136 00b4 18000000 		.word	.LC1
+ 126 0088 00000000 		.word	.LC0
+ 127 008c 00000000 		.word	.LANCHOR0
+ 128 0090 00080140 		.word	1073809408
+ 129 0094 00000000 		.word	htim4
+ 130 0098 00000000 		.word	.LANCHOR1
+ 131 009c 000C0140 		.word	1073810432
+ 132 00a0 00000000 		.word	htim3
+ 133 00a4 00000000 		.word	.LANCHOR2
+ 134 00a8 00000000 		.word	htim2
+ 135 00ac 00100140 		.word	1073811456
+ 136 00b0 18000000 		.word	.LC1
  137              		.cfi_endproc
  138              	.LFE68:
  140              		.section	.rodata.uart_str_RxCPLTCallback.str1.4,"aMS",%progbits,1
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  161 0030 53544F50 		.ascii	"STOP\000"
  161      00
  162 0035 000000   		.align	2
-ARM GAS  /tmp/cco9LWb0.s 			page 5
+ARM GAS  /tmp/cc3v6KQL.s 			page 5
 
 
  163              	.LC9:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  206              		.loc 1 66 12 is_stmt 0 view .LVU22
  207 0008 3649     		ldr	r1, .L20
  208 000a 3748     		ldr	r0, .L20+4
-ARM GAS  /tmp/cco9LWb0.s 			page 6
+ARM GAS  /tmp/cc3v6KQL.s 			page 6
 
 
  209 000c FFF7FEFF 		bl	strtok
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  253 003c 2046     		mov	r0, r4
  254              	.LVL18:
  255              		.loc 1 75 9 view .LVU40
-ARM GAS  /tmp/cco9LWb0.s 			page 7
+ARM GAS  /tmp/cc3v6KQL.s 			page 7
 
 
  256 003e FFF7FEFF 		bl	strcmp
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  299              	.LVL25:
  300              		.loc 1 86 42 discriminator 1 view .LVU53
  301 0078 28B9     		cbnz	r0, .L13
-ARM GAS  /tmp/cco9LWb0.s 			page 8
+ARM GAS  /tmp/cc3v6KQL.s 			page 8
 
 
  302              	.L12:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  344              		.loc 1 98 9 is_stmt 0 view .LVU66
  345 00aa 1949     		ldr	r1, .L20+44
  346 00ac 2046     		mov	r0, r4
-ARM GAS  /tmp/cco9LWb0.s 			page 9
+ARM GAS  /tmp/cc3v6KQL.s 			page 9
 
 
  347 00ae FFF7FEFF 		bl	strcmp
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  393 00dc 0E48     		ldr	r0, .L20+52
  394 00de FFF7FEFF 		bl	uart_send_mes_IT
  395              	.LVL37:
-ARM GAS  /tmp/cco9LWb0.s 			page 10
+ARM GAS  /tmp/cc3v6KQL.s 			page 10
 
 
  396 00e2 B0E7     		b	.L9
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  113:App/Src/app.c ****     }
  114:App/Src/app.c **** 
  115:App/Src/app.c ****     // if (htim->Instance == TIM4)
-ARM GAS  /tmp/cco9LWb0.s 			page 11
+ARM GAS  /tmp/cc3v6KQL.s 			page 11
 
 
  116:App/Src/app.c ****     //     driveElapsedCallback(&drv_l);
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  491              	drv_r:
  492 0000 00000000 		.space	56
  492      00000000 
-ARM GAS  /tmp/cco9LWb0.s 			page 12
+ARM GAS  /tmp/cc3v6KQL.s 			page 12
 
 
  492      00000000 
@@ -686,32 +686,32 @@ ARM GAS  /tmp/cco9LWb0.s 			page 1
  516              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
  517              		.file 13 "/home/mark/toolchains/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdio.h"
  518              		.file 14 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  /tmp/cco9LWb0.s 			page 13
+ARM GAS  /tmp/cc3v6KQL.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 app.c
-     /tmp/cco9LWb0.s:18     .rodata.app.str1.4:0000000000000000 $d
-     /tmp/cco9LWb0.s:25     .text.app:0000000000000000 $t
-     /tmp/cco9LWb0.s:31     .text.app:0000000000000000 app
-     /tmp/cco9LWb0.s:126    .text.app:000000000000008c $d
-     /tmp/cco9LWb0.s:141    .rodata.uart_str_RxCPLTCallback.str1.4:0000000000000000 $d
-     /tmp/cco9LWb0.s:175    .text.uart_str_RxCPLTCallback:0000000000000000 $t
-     /tmp/cco9LWb0.s:181    .text.uart_str_RxCPLTCallback:0000000000000000 uart_str_RxCPLTCallback
-     /tmp/cco9LWb0.s:400    .text.uart_str_RxCPLTCallback:00000000000000e4 $d
-     /tmp/cco9LWb0.s:418    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
-     /tmp/cco9LWb0.s:424    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
-     /tmp/cco9LWb0.s:464    .text.HAL_TIM_PeriodElapsedCallback:000000000000001c $d
-     /tmp/cco9LWb0.s:502    .bss.val:0000000000000000 val
-     /tmp/cco9LWb0.s:496    .bss.flag:0000000000000000 flag
-     /tmp/cco9LWb0.s:477    .bss.command:0000000000000000 command
-     /tmp/cco9LWb0.s:473    .bss.command:0000000000000000 $d
-     /tmp/cco9LWb0.s:480    .bss.drv_l:0000000000000000 $d
-     /tmp/cco9LWb0.s:484    .bss.drv_l:0000000000000000 drv_l
-     /tmp/cco9LWb0.s:487    .bss.drv_r:0000000000000000 $d
-     /tmp/cco9LWb0.s:491    .bss.drv_r:0000000000000000 drv_r
-     /tmp/cco9LWb0.s:497    .bss.flag:0000000000000000 $d
-     /tmp/cco9LWb0.s:499    .bss.val:0000000000000000 $d
+     /tmp/cc3v6KQL.s:18     .rodata.app.str1.4:0000000000000000 $d
+     /tmp/cc3v6KQL.s:25     .text.app:0000000000000000 $t
+     /tmp/cc3v6KQL.s:31     .text.app:0000000000000000 app
+     /tmp/cc3v6KQL.s:126    .text.app:0000000000000088 $d
+     /tmp/cc3v6KQL.s:141    .rodata.uart_str_RxCPLTCallback.str1.4:0000000000000000 $d
+     /tmp/cc3v6KQL.s:175    .text.uart_str_RxCPLTCallback:0000000000000000 $t
+     /tmp/cc3v6KQL.s:181    .text.uart_str_RxCPLTCallback:0000000000000000 uart_str_RxCPLTCallback
+     /tmp/cc3v6KQL.s:400    .text.uart_str_RxCPLTCallback:00000000000000e4 $d
+     /tmp/cc3v6KQL.s:418    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/cc3v6KQL.s:424    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/cc3v6KQL.s:464    .text.HAL_TIM_PeriodElapsedCallback:000000000000001c $d
+     /tmp/cc3v6KQL.s:502    .bss.val:0000000000000000 val
+     /tmp/cc3v6KQL.s:496    .bss.flag:0000000000000000 flag
+     /tmp/cc3v6KQL.s:477    .bss.command:0000000000000000 command
+     /tmp/cc3v6KQL.s:473    .bss.command:0000000000000000 $d
+     /tmp/cc3v6KQL.s:480    .bss.drv_l:0000000000000000 $d
+     /tmp/cc3v6KQL.s:484    .bss.drv_l:0000000000000000 drv_l
+     /tmp/cc3v6KQL.s:487    .bss.drv_r:0000000000000000 $d
+     /tmp/cc3v6KQL.s:491    .bss.drv_r:0000000000000000 drv_r
+     /tmp/cc3v6KQL.s:497    .bss.flag:0000000000000000 $d
+     /tmp/cc3v6KQL.s:499    .bss.val:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 uart_send_mes

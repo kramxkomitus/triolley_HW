@@ -62,12 +62,12 @@ bool drive_set_vel(struct drive *D, int32_t vel)
     }
     else
     {
-        if ((vel < 150) && (vel > -150))
-        {
-            HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
-            HAL_TIM_Base_Stop_IT(D->tim);
-            return;
-        }
+        // if ((vel < 150) && (vel > -150))
+        // {
+        //     HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
+        //     HAL_TIM_Base_Stop_IT(D->tim);
+        //     return;
+        // }
         if (vel < 0)
         {
             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
@@ -93,6 +93,7 @@ bool drive_set_vel(struct drive *D, int32_t vel)
 
 void drive_increese_speed(struct drive *D)
 {
+
     if (D->target_step_time > D->current_step_time)
     {
         if (D->target_step_time - D->current_step_time > D->axeleration_step)
@@ -102,16 +103,24 @@ void drive_increese_speed(struct drive *D)
             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
         }
         D->current_speed = (48000000 * 60) / (D->current_step_time * D->PPR);
+        HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
     }
     else if (D->target_step_time < D->current_step_time)
     {
-        if (D->current_step_time - D->target_step_time > D->axeleration_step)
+        if (D->current_step_time - D->target_step_time >= D->axeleration_step)
         {
             D->current_step_time = D->current_step_time - D->axeleration_step;
             __HAL_TIM_SetAutoreload(D->tim, D->current_step_time - 1);
             __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step_time >> 1) - 1);
+            D->current_speed = (48000000 * 60) / (D->current_step_time * D->PPR);
+            HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
         }
-        D->current_speed = (48000000 * 60) / (D->current_step_time * D->PPR);
+    }
+    if (D->current_step_time > MAX_TIME_STEP)
+    {
+        HAL_TIM_PWM_Stop(D->tim, D->tim_chanel);
+        HAL_TIM_Base_Stop_IT(D->tim);
+        D->current_speed = 0;
     }
 }
 

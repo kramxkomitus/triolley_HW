@@ -27,7 +27,7 @@ void app()
         ENA_DRV_L_Pin,
         DIR_DRV_L_GPIO_Port,
         DIR_DRV_L_Pin,
-        10,
+        1,
         6400);
 
     drive_init(
@@ -39,7 +39,7 @@ void app()
         ENA_DRV_R_Pin,
         DIR_DRV_R_GPIO_Port,
         DIR_DRV_R_Pin,
-        3,
+        1,
         6400);
 
     int16_t i = 500;
