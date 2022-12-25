@@ -51,7 +51,7 @@ void app()
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
         sprintf(buffer, "L %d\t\t\tR%d\n", drv_l.current_speed, drv_r.current_speed);
         uart_send_mes_IT(buffer);
-        HAL_Delay(100);
+        HAL_Delay(10);
     }
 }
 
@@ -61,7 +61,7 @@ void uart_str_RxCPLTCallback()
     uint8_t *word_arr[10];
     uint8_t *word;
     uint8_t i = 0;
-    volatile int32_t vel = 0;
+    volatile int32_t arg = 0;
     struct drive *cur_d = NULL;
     word = strtok(command, " ");
     while (word != NULL)
@@ -92,13 +92,18 @@ void uart_str_RxCPLTCallback()
     if (strcmp(word_arr[0], "r") == 0 || (strcmp(word_arr[0], "R") == 0))
     {
 
-        vel = atoi(word_arr[1]);
-        drive_set_vel(&drv_r, vel);
+        arg = atoi(word_arr[1]);
+        drive_set_vel(&drv_r, arg);
     }
     if (strcmp(word_arr[0], "l") == 0 || strcmp(word_arr[0], "L") == 0)
     {
-        vel = atoi(word_arr[1]);
-        drive_set_vel(&drv_l, vel);
+        arg = atoi(word_arr[1]);
+        drive_set_vel(&drv_l, arg);
+    }
+    if (strcmp(word_arr[0], "AXEL") == 0 || strcmp(word_arr[0], "axel") == 0)
+    {
+        arg = atoi(word_arr[1]);
+        drive_set_axel(&drv_l, arg);
     }
     command[0] = '\0';
     uart_ask_str_IT(command);
@@ -106,41 +111,8 @@ void uart_str_RxCPLTCallback()
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if (htim->Instance == TIM2)
-    {
-        drive_increese_speed(&drv_l);
-        drive_increese_speed(&drv_r);
-    }
-
-    // if (htim->Instance == TIM4)
-    //     driveElapsedCallback(&drv_l);
-    // if (htim->Instance == TIM3)
-    //     driveElapsedCallback(&drv_r);
+    if (htim->Instance == TIM4)
+        driveElapsedCallback(&drv_l);
+    if (htim->Instance == TIM3)
+        driveElapsedCallback(&drv_r);
 }
-
-/*
-void app()
-{
-    uint8_t usb_buff[] = "I AM OK!";
-    int data = 1;
-    while (1)
-    {
-        CDC_Transmit_FS(usb_buff, sizeof(usb_buff));
-
-        if (USB_Rx_flag == true)
-        {
-            HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, SET);
-            CDC_Transmit_FS(usb_buff, sizeof(usb_buff));
-        }
-        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, RESET);
-    }
-}
-
-void USB_APP_Receive(uint8_t *Buf, uint32_t *Len)
-{
-    USB_Rx_flag = true;
-    memset(USB_buff, '\0', USB_buff_len);
-    if (*Len < USB_buff_len)
-        memcpy(USB_buff, Buf, *Len);
-}
-*/

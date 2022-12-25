@@ -7,8 +7,15 @@
 #define PIN_ON RESET
 #define PIN_OFF SET
 
+#define TIM_CLOCK 48000000
+
+#define MIN_SPEED 150
+#define MAX_SPEED 1000
+
+#define AXEL_RES 10000
+
 /*обновление контролирующего таймера 0,01 сек = 10 мсек*/
-#define AXEL_QANT_TIME 10   //мсек
+#define AXEL_QANT_TIME 10 // мсек
 
 enum drv_location
 {
@@ -26,13 +33,13 @@ struct drive
     {
         forward,
         backward
-    } direction;
+    } target_dir, current_dir ;
 
-    int32_t target_speed;       //RPM
-    int32_t current_speed;       //RPM NU
-    int32_t target_step_time;
-    int32_t current_step_time;
-    uint32_t axeleration_step;
+    int32_t target_speed;  // RPM
+    int32_t current_speed; // RPM NU
+    int32_t target_step;
+    int32_t current_step;
+    uint32_t axeleration_koef;
     uint32_t axeleration;
 
     TIM_HandleTypeDef *tim;
@@ -63,7 +70,5 @@ void drive_off(struct drive *D);
 void driveElapsedCallback(struct drive *D);
 bool drive_set_axel(struct drive *D, uint32_t axeleration);
 bool drive_set_vel(struct drive *D, int32_t vel);
-void drive_increese_speed(struct drive *D);
-
 
 #endif /* INC_APP_H_ */
