@@ -1,7 +1,5 @@
 #include "drive.h"
 
-#define MAX_TIME_STEP 3000
-
 void drive_init(
     struct drive *D,
     enum drv_location side,
@@ -19,8 +17,6 @@ void drive_init(
     D->current_dir = forward;
     D->target_speed = 0;  // RPM
     D->current_speed = 0; // RPM NU
-    D->target_step = MAX_TIME_STEP;
-    D->current_step = MAX_TIME_STEP;
     D->tim = tim;
     D->tim_chanel = tim_chanel;
     D->ena_pin_port = ena_pin_port;
@@ -28,6 +24,8 @@ void drive_init(
     D->dir_pin_port = dir_pin_port;
     D->dir_pin = dir_pin;
     D->PPR = PPR;
+    D->target_step = ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR);
+    D->current_step = ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR);
     D->axeleration_koef = AXEL_RES + axeleration;
     // drive_set_axel(&D, axeleration);
 }
@@ -69,6 +67,14 @@ bool drive_set_vel(struct drive *D, int32_t vel)
             HAL_TIM_Base_Stop_IT(D->tim);
             return;
         }
+        if (vel > MAX_SPEED)
+        {
+            vel = MAX_SPEED;
+        }
+        if (vel < -MAX_SPEED)
+        {
+            vel = - MAX_SPEED;
+        }
         if (vel < 0)
         {
             HAL_GPIO_WritePin(D->dir_pin_port, D->dir_pin, PIN_OFF);
@@ -82,7 +88,7 @@ bool drive_set_vel(struct drive *D, int32_t vel)
         }
 
         D->target_speed = vel;
-        D->target_step = TIM_CLOCK / (((vel)*D->PPR) / 60 /*RPM*/);
+        D->target_step = TIM_CLOCK / (vel) / D->PPR * 60 /*RPM*/;
         __HAL_TIM_SetAutoreload(D->tim, D->current_step - 1);
         __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step >> 1) - 1);
         HAL_TIM_PWM_Start(D->tim, D->tim_chanel);
@@ -95,19 +101,20 @@ bool drive_set_vel(struct drive *D, int32_t vel)
 void driveElapsedCallback(struct drive *D)
 {
     int32_t delta;
-    uint32_t new_step = 3000;
+    uint32_t new_step = ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR);
 
     if (D->target_dir != D->current_dir) // скорости разных знаков, необходимо произвести торможение
     {
-        //если движок стоял, то сразу переходим к разгону приравняв направления
-        if (D->current_step >= ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR)){
+        // если движок стоял, то сразу переходим к разгону приравняв направления
+        if (D->current_step >= ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR))
+        {
             D->current_dir = D->target_dir;
             return;
         }
         new_step = D->current_step * D->axeleration_koef / AXEL_RES /*%*/;
         // определяем шаг после уменьшения скорости, если скорость меньше минимальной
-        //не забываем что скорость обратнопропорционально шагам
-        if (new_step > ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR)) 
+        // не забываем что скорость обратнопропорционально шагам
+        if (new_step > ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR))
         {
             // принимаем ее минимальной
             new_step = ((TIM_CLOCK / MIN_SPEED) * 60 / D->PPR);
@@ -156,9 +163,9 @@ void driveElapsedCallback(struct drive *D)
     // записываем текущий шаг в двигатель
     D->current_step = new_step;
 
-    D->current_speed = (TIM_CLOCK * 60) / (D->current_step * D->PPR);
+    D->current_speed = (TIM_CLOCK / D->current_step) * 60 / D->PPR;
     if (D->current_dir == backward)
-        D->current_speed = - D->current_speed;
+        D->current_speed = -D->current_speed;
     __HAL_TIM_SetAutoreload(D->tim, D->current_step - 1);
     __HAL_TIM_SET_COMPARE(D->tim, D->tim_chanel, (D->current_step >> 1) - 1);
 }

@@ -7,7 +7,7 @@
 #define PIN_ON RESET
 #define PIN_OFF SET
 
-#define TIM_CLOCK 48000000
+#define TIM_CLOCK 72000000
 
 #define MIN_SPEED 150
 #define MAX_SPEED 1000

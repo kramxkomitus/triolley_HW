@@ -27,8 +27,8 @@ void app()
         ENA_DRV_L_Pin,
         DIR_DRV_L_GPIO_Port,
         DIR_DRV_L_Pin,
-        1,
-        6400);
+        5,
+        400);
 
     drive_init(
         &drv_r,
@@ -39,8 +39,8 @@ void app()
         ENA_DRV_R_Pin,
         DIR_DRV_R_GPIO_Port,
         DIR_DRV_R_Pin,
-        1,
-        6400);
+        5,
+        400);
 
     int16_t i = 500;
     uint8_t buffer[64];
@@ -51,7 +51,7 @@ void app()
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
         sprintf(buffer, "L %d\t\t\tR%d\n", drv_l.current_speed, drv_r.current_speed);
         uart_send_mes_IT(buffer);
-        HAL_Delay(10);
+        HAL_Delay(5);
     }
 }
 
